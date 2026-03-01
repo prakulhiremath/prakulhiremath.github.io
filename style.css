@@ -110,3 +110,16 @@ footer {
   color: #6b7280;
   font-size: 14px;
 }
+
+.page {
+  padding: 140px 10% 100px 10%;
+}
+
+.page h1 {
+  font-size: 48px;
+  margin-bottom: 60px;
+}
+
+.page section {
+  margin-bottom: 60px;
+}
