@@ -217,7 +217,7 @@
 
   .hero-sub {
     margin-top: 3rem;
-    max-width: 520px;
+    max-width: 560px;
     font-size: 1rem;
     line-height: 1.8;
     color: rgba(240,240,248,0.5);
@@ -330,6 +330,113 @@
 
   .ticker-item span { color: var(--acid); }
 
+  /* CREDIBILITY BANNER */
+  .credibility {
+    position: relative;
+    z-index: 2;
+    padding: 5rem 4rem;
+    background: linear-gradient(180deg, rgba(0,255,136,0.02) 0%, transparent 100%);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .credibility-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .credibility-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--acid);
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .credibility-label::before {
+    content: '';
+    width: 20px; height: 1px;
+    background: var(--acid);
+  }
+
+  .cred-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+
+  .cred-card {
+    padding: 2.5rem 2.5rem;
+    border-right: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .cred-card:last-child { border-right: none; }
+
+  .cred-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--acid), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+
+  .cred-card:hover::before { transform: scaleX(1); }
+  .cred-card:hover { background: rgba(0,255,136,0.03); }
+
+  .cred-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--acid);
+    border: 1px solid rgba(0,255,136,0.3);
+    display: inline-block;
+    padding: 0.25rem 0.7rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cred-card h3 {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+  }
+
+  .cred-card p {
+    font-size: 0.82rem;
+    color: rgba(240,240,248,0.4);
+    line-height: 1.8;
+  }
+
+  .cred-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--acid);
+    letter-spacing: 0.04em;
+    margin-top: 1rem;
+    display: block;
+  }
+
+  .cred-ref {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-top: 0.5rem;
+    display: block;
+  }
+
   /* SECTION COMMONS */
   section { position: relative; z-index: 2; }
 
@@ -433,6 +540,17 @@
     font-size: 0.88rem;
     color: rgba(240,240,248,0.4);
     line-height: 1.8;
+  }
+
+  .arch-sublabel {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 1rem;
+    display: block;
+    line-height: 2;
   }
 
   .arch-tag {
@@ -683,6 +801,80 @@
   .cat-medical { border: 1px solid rgba(255,45,107,0.3); color: var(--signal); }
   .cat-math { border: 1px solid rgba(0,207,255,0.3); color: var(--ice); }
 
+  /* CONTACT */
+  .contact {
+    padding: 8rem 4rem;
+    background: linear-gradient(180deg, transparent 0%, rgba(123,47,255,0.03) 50%, transparent 100%);
+  }
+
+  .contact-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .contact-header {
+    margin-bottom: 4rem;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+
+  .contact-card {
+    padding: 3rem 2.5rem;
+    border-right: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .contact-card:last-child { border-right: none; }
+
+  .contact-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--plasma), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+
+  .contact-card:hover::before { transform: scaleX(1); }
+  .contact-card:hover { background: rgba(123,47,255,0.04); }
+
+  .contact-type {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .contact-card a {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.2s;
+    word-break: break-all;
+  }
+
+  .contact-card a:hover { color: var(--acid); }
+
+  .contact-card .contact-desc {
+    font-size: 0.78rem;
+    color: rgba(240,240,248,0.3);
+    margin-top: 0.5rem;
+    line-height: 1.7;
+  }
+
   /* FOOTER */
   footer {
     position: relative;
@@ -885,7 +1077,7 @@
   /* RESPONSIVE */
   @media (max-width: 1024px) {
     nav { padding: 1.5rem 2rem; }
-    .architecture, .domains, .signal, .stats { padding-left: 2rem; padding-right: 2rem; }
+    .architecture, .domains, .signal, .stats, .credibility, .contact { padding-left: 2rem; padding-right: 2rem; }
     .arch-header { grid-template-columns: 1fr; }
     .arch-layers { grid-template-columns: 1fr; }
     .arch-layer { border-right: none; border-bottom: 1px solid var(--border); }
@@ -894,6 +1086,10 @@
     .signal-left { position: static; }
     .stats-inner { grid-template-columns: repeat(2, 1fr); }
     .footer-top { grid-template-columns: 1fr 1fr; }
+    .cred-grid { grid-template-columns: 1fr; }
+    .cred-card { border-right: none; border-bottom: 1px solid var(--border); }
+    .contact-grid { grid-template-columns: 1fr; }
+    .contact-card { border-right: none; border-bottom: 1px solid var(--border); }
   }
 
   @media (max-width: 640px) {
@@ -923,11 +1119,13 @@
     <span class="nav-wordmark">AoE</span>
   </div>
   <div class="nav-links">
+    <a href="about.html">About</a>
     <a href="research.html">Research</a>
     <a href="projects.html">Projects</a>
-    <a href="blog.html">Blog</a>
-    <a href="people.html">People</a>
     <a href="publications.html">Publications</a>
+    <a href="news.html">News</a>
+    <a href="people.html">People</a>
+    <a href="contact.html">Contact</a>
     <a href="blog.html" class="nav-cta">Research Log</a>
   </div>
 </nav>
@@ -940,12 +1138,12 @@
     <span class="line2"><span class="on">ON</span> EARTH</span>
   </h1>
   <p class="hero-sub">
-    A collective of researchers operating at the collision of mathematical foundations,
-    energy systems, and medical signal intelligence.
+    A science-driven research collective advancing clean energy systems, computational modeling,
+    and applied healthcare technologies — with real-world deployment and startup translation pathways.
   </p>
   <div class="hero-actions">
     <a href="research.html" class="btn-primary">Explore Research</a>
-    <a href="publications.html" class="btn-ghost">Publications</a>
+    <a href="about.html" class="btn-ghost">About AoE</a>
   </div>
   <div class="scroll-hint">
     <span>Scroll</span>
@@ -956,47 +1154,98 @@
 <!-- TICKER -->
 <div class="ticker">
   <div class="ticker-inner" id="ticker">
-    <span class="ticker-item">BIOLOOP <span>·</span> Green Hydrogen Pathways</span>
-    <span class="ticker-item">Arrhythmia Modeling <span>·</span> Signal Intelligence</span>
-    <span class="ticker-item">Bayesian Temporal Systems <span>·</span> Mathematical Foundations</span>
-    <span class="ticker-item">EEG <span>·</span> ECG Signal Analysis <span>·</span> Solar-Driven Systems</span>
-    <span class="ticker-item">BIOLOOP <span>·</span> Green Hydrogen Pathways</span>
-    <span class="ticker-item">Arrhythmia Modeling <span>·</span> Signal Intelligence</span>
-    <span class="ticker-item">Bayesian Temporal Systems <span>·</span> Mathematical Foundations</span>
-    <span class="ticker-item">EEG <span>·</span> ECG Signal Analysis <span>·</span> Solar-Driven Systems</span>
+    <span class="ticker-item">BIOLOOP <span>·</span> CO₂ Capture to Biofuel</span>
+    <span class="ticker-item">Green Hydrogen <span>·</span> CSP + Nano-Catalysts + Seawater Electrolysis</span>
+    <span class="ticker-item">Urjawave <span>·</span> PEM Electrolyzer Platform</span>
+    <span class="ticker-item">Arrhythmia Modeling <span>·</span> Bayesian ECG/EEG Analysis</span>
+    <span class="ticker-item">Temporal Inference Systems <span>·</span> Mathematical Foundations</span>
+    <span class="ticker-item">MSME CoE IISc <span>·</span> Startup Karnataka NAIN 2.0 <span>·</span> DD Chandana</span>
+    <span class="ticker-item">BIOLOOP <span>·</span> CO₂ Capture to Biofuel</span>
+    <span class="ticker-item">Green Hydrogen <span>·</span> CSP + Nano-Catalysts + Seawater Electrolysis</span>
+    <span class="ticker-item">Urjawave <span>·</span> PEM Electrolyzer Platform</span>
+    <span class="ticker-item">Arrhythmia Modeling <span>·</span> Bayesian ECG/EEG Analysis</span>
+    <span class="ticker-item">Temporal Inference Systems <span>·</span> Mathematical Foundations</span>
+    <span class="ticker-item">MSME CoE IISc <span>·</span> Startup Karnataka NAIN 2.0 <span>·</span> DD Chandana</span>
   </div>
 </div>
 
-<!-- ARCHITECTURE -->
+<!-- CREDIBILITY BANNER -->
+<section class="credibility">
+  <div class="credibility-inner">
+    <div class="credibility-label reveal">Recognition &amp; Validation</div>
+    <div class="cred-grid reveal">
+      <div class="cred-card">
+        <span class="cred-badge">MSME Idea Hackathon 4.0</span>
+        <h3>Green Hydrogen from Seawater — Approved for Incubation</h3>
+        <p>Integrating nano-catalysts, selective membranes, and concentrated solar power. Approved for incubation at MSME Centre of Excellence, Indian Institute of Science (IISc), Bengaluru.</p>
+        <span class="cred-amount">₹15,00,000</span>
+        <span class="cred-ref">Ref. No: IDEAKR-026059 · IISc, Bengaluru</span>
+      </div>
+      <div class="cred-card">
+        <span class="cred-badge">Startup Karnataka — NAIN 2.0</span>
+        <h3>Two Projects Recognised &amp; Funded</h3>
+        <p>Urjawave (high-intensity PEM electrolyzer hydrogen platform) and Bioloop (CO₂-to-biofuel system) both received grants. Supported by Government of Karnataka, Startup Karnataka, and IIIT Dharwad Research Park.</p>
+        <span class="cred-amount">₹3,00,000</span>
+        <span class="cred-ref">Urjawave ₹2,00,000 · Bioloop ₹1,00,000</span>
+      </div>
+      <div class="cred-card">
+        <span class="cred-badge">Media Recognition</span>
+        <h3>Featured on DD Chandana</h3>
+        <p>Interview held at Suvarna Soudha, Belagavi. Bioloop featured as a carbon capture to biodiesel system — representing AoE's mission on national public media.</p>
+        <a href="https://www.linkedin.com/posts/officialaoe_aliensonearth-innovation-sustainability-activity-7392988244625387520-76rO" target="_blank" rel="noopener" style="display:inline-block; margin-top:1.5rem; font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--acid); text-decoration:none; border-bottom:1px solid rgba(0,255,136,0.3); padding-bottom:0.3rem;">View Feature →</a>
+        <span class="cred-ref" style="margin-top:1rem;">DD Chandana · Suvarna Soudha, Belagavi</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ARCHITECTURE / PILLARS -->
 <section class="architecture">
   <div class="arch-header reveal">
     <div>
-      <div class="section-label">Research Architecture</div>
+      <div class="section-label">Strategic Pillars</div>
       <h2 class="section-title">How We<br>Think</h2>
     </div>
     <p class="arch-desc">
-      Our work flows through three interlocking layers — from abstract mathematical foundations
-      down to physical prototypes and experimental validation in the real world.
+      Our work flows through three interlocking pillars — from energy systems engineering
+      down to computational foundations and applied medical science.
     </p>
   </div>
   <div class="arch-layers reveal">
     <div class="arch-layer">
       <span class="arch-num">01</span>
-      <h3>Foundations</h3>
-      <p>Mathematics, Bayesian systems, temporal modeling, and computational methods that underpin everything we build.</p>
-      <span class="arch-tag">Pure Research</span>
+      <h3>Energy Systems</h3>
+      <p>Primary focus. Developing next-generation clean energy systems including green hydrogen production, BIOLOOP CO₂ capture architecture, and PEM-based hydrogen platforms.</p>
+      <span class="arch-sublabel">
+        Green Hydrogen · BIOLOOP · Urjawave<br>
+        CSP · Nano-Catalysts · Seawater Electrolysis<br>
+        Solar-Driven Electrochemical Systems
+      </span>
+      <span class="arch-tag">Primary Focus</span>
     </div>
     <div class="arch-layer">
       <span class="arch-num">02</span>
-      <h3>Applied Systems</h3>
-      <p>Energy systems, hydrogen pathways, and medical signal modeling — turning theory into testable systems.</p>
-      <span class="arch-tag">Engineering</span>
+      <h3>Computational Foundations</h3>
+      <p>The intellectual backbone. Bayesian systems, temporal inference, reinforcement learning, machine learning, and signal intelligence — applied modeling, not generic AI.</p>
+      <span class="arch-sublabel">
+        Bayesian Systems · Temporal Modeling<br>
+        Reinforcement Learning · NLP<br>
+        Signal Intelligence Systems
+      </span>
+      <span class="arch-tag">Intellectual Backbone</span>
     </div>
     <div class="arch-layer">
       <span class="arch-num">03</span>
-      <h3>Implementation</h3>
-      <p>Prototype systems, experimental validation, and real-world testing that closes the loop back to foundations.</p>
-      <span class="arch-tag">Validation</span>
+      <h3>Medical Systems</h3>
+      <p>Applied computational medicine. Cardiac arrhythmia modeling, advanced ECG and EEG signal processing, and Bayesian diagnostic frameworks built on our computational foundations.</p>
+      <span class="arch-sublabel">
+        Arrhythmia Modeling · ECG Analysis<br>
+        EEG Signal Processing<br>
+        Bayesian Diagnostics
+      </span>
+      <span class="arch-tag">Applied Medicine</span>
     </div>
   </div>
 </section>
@@ -1020,13 +1269,15 @@
             <path d="M16 16 Q24 10 32 16 Q38 24 32 32 Q24 38 16 32 Q10 24 16 16Z" stroke="#00ff88" stroke-width="0.5" fill="none" opacity="0.4"/>
           </svg>
         </div>
-        <h3>Energy</h3>
-        <p>Developing next-generation energy systems including BIOLOOP architectures, green hydrogen production pathways, and solar-driven electrochemical systems.</p>
+        <h3>Energy Systems</h3>
+        <p>Building clean energy infrastructure aligned with India's National Hydrogen Mission and National Biofuel Mission. From seawater electrolysis to CO₂-to-biofuel systems — real prototypes, real funding, real deployment pathways.</p>
         <div class="domain-tags">
           <span class="tag">BIOLOOP</span>
+          <span class="tag">Urjawave</span>
           <span class="tag">Green H₂</span>
+          <span class="tag">CSP</span>
+          <span class="tag">PEM Electrolyzer</span>
           <span class="tag">Solar Systems</span>
-          <span class="tag">Electrochemistry</span>
         </div>
       </div>
 
@@ -1037,11 +1288,12 @@
           </svg>
         </div>
         <h3>Medical Systems</h3>
-        <p>Computational modeling of cardiac arrhythmias, advanced EEG signal processing, and ECG signal analysis using probabilistic and Bayesian frameworks.</p>
+        <p>Computational modeling of cardiac arrhythmias, advanced EEG signal processing, and ECG analysis using probabilistic and Bayesian frameworks. Applied medicine powered by our mathematical foundations.</p>
         <div class="domain-tags">
           <span class="tag">Arrhythmia</span>
           <span class="tag">EEG</span>
           <span class="tag">ECG</span>
+          <span class="tag">Bayesian DX</span>
           <span class="tag">Signal</span>
         </div>
       </div>
@@ -1059,11 +1311,14 @@
             <line x1="22" y1="33" x2="26" y2="33" stroke="#00cfff" stroke-width="1"/>
           </svg>
         </div>
-        <h3>Foundational Research</h3>
-        <p>Bayesian series analysis, temporal inference systems, and mathematical frameworks that serve as the theoretical backbone for all applied work.</p>
+        <h3>Computational Foundations</h3>
+        <p>Bayesian series analysis, temporal inference systems, reinforcement learning, and mathematical frameworks. The theoretical backbone that makes our applied work rigorous — not generic AI, but deep modeling.</p>
         <div class="domain-tags">
           <span class="tag">Bayesian</span>
           <span class="tag">Temporal</span>
+          <span class="tag">RL</span>
+          <span class="tag">ML</span>
+          <span class="tag">NLP</span>
           <span class="tag">Probability</span>
         </div>
       </div>
@@ -1075,16 +1330,16 @@
 <div class="stats reveal">
   <div class="stats-inner">
     <div class="stat">
+      <span class="stat-num">₹18L+</span>
+      <span class="stat-label">Funding Secured</span>
+    </div>
+    <div class="stat">
       <span class="stat-num">3</span>
       <span class="stat-label">Core Domains</span>
     </div>
     <div class="stat">
       <span class="stat-num">12+</span>
       <span class="stat-label">Active Projects</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">∞</span>
-      <span class="stat-label">Questions Left</span>
     </div>
     <div class="stat">
       <span class="stat-num">01</span>
@@ -1147,34 +1402,66 @@
   </div>
 </section>
 
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section class="contact">
+  <div class="contact-inner">
+    <div class="contact-header reveal">
+      <div class="section-label">Contact</div>
+      <h2 class="section-title">Get In<br>Touch</h2>
+    </div>
+    <div class="contact-grid reveal">
+      <div class="contact-card">
+        <span class="contact-type">General Enquiries</span>
+        <a href="mailto:officialaliensonearth@gmail.com">officialaliensonearth@gmail.com</a>
+        <p class="contact-desc">For research collaborations, media, and general correspondence.</p>
+      </div>
+      <div class="contact-card">
+        <span class="contact-type">Bioloop Project</span>
+        <a href="mailto:bioloopofficial@gmail.com">bioloopofficial@gmail.com</a>
+        <p class="contact-desc">Direct contact for Bioloop — CO₂ capture to biofuel system inquiries.</p>
+      </div>
+      <div class="contact-card">
+        <span class="contact-type">LinkedIn</span>
+        <a href="https://in.linkedin.com/company/officialaoe" target="_blank" rel="noopener">linkedin.com/company/officialaoe</a>
+        <p class="contact-desc">Follow AoE for research updates, announcements, and media coverage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
         <h2>AoE</h2>
-        <p>Aliens on Earth. An independent research collective working at the edge of what's known.</p>
+        <p>Aliens on Earth. An independent research collective working at the edge of what's known. Science-driven. Engineering-focused.</p>
       </div>
       <div class="footer-col">
         <h4>Research</h4>
         <a href="research.html">Overview</a>
         <a href="projects.html">Projects</a>
         <a href="publications.html">Publications</a>
+        <a href="news.html">News</a>
       </div>
       <div class="footer-col">
         <h4>Collective</h4>
+        <a href="about.html">About</a>
         <a href="people.html">People</a>
         <a href="blog.html">Research Log</a>
+        <a href="contact.html">Contact</a>
       </div>
       <div class="footer-col">
         <h4>Domains</h4>
-        <a href="#">Energy Systems</a>
-        <a href="#">Medical Systems</a>
-        <a href="#">Foundations</a>
+        <a href="research.html#energy">Energy Systems</a>
+        <a href="research.html#foundations">Computational Foundations</a>
+        <a href="research.html#medical">Medical Systems</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 AoE — Aliens on Earth · Independent Research Collective</span>
+      <span>© 2026 AoE — Aliens on Earth · Independent Research Collective · aliensonearth.in</span>
       <div class="footer-status">
         <div class="status-dot"></div>
         <span>Research Active</span>
@@ -1204,7 +1491,7 @@
   }
   animRing();
 
-  document.querySelectorAll('a, button, .domain-card, .arch-layer').forEach(el => {
+  document.querySelectorAll('a, button, .domain-card, .arch-layer, .cred-card, .contact-card').forEach(el => {
     el.addEventListener('mouseenter', () => {
       cursor.style.transform = 'translate(-50%,-50%) scale(2)';
       ring.style.width = '60px'; ring.style.height = '60px';
@@ -1272,8 +1559,6 @@
 
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-      ctx.fillStyle = p.color.replace(')', `,${p.o})`).replace('rgb', 'rgba').replace('#','');
-      // simpler approach:
       ctx.globalAlpha = p.o * (0.5 + Math.sin(t + p.x * 0.01) * 0.5);
       ctx.fillStyle = p.color;
       ctx.fill();
