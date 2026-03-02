@@ -1283,216 +1283,54 @@
   .pill-f  { border-color: rgba(0,207,255,0.35);   color: var(--ice); }
   .pill-n  { border-color: rgba(123,47,255,0.35);  color: var(--plasma); }
 
-  /* ── LEADERSHIP CARDS (photo background) ── */
-  .leadership-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    border: 1px solid var(--border);
-    margin-bottom: 0;
-  }
-  .leader-card {
-    position: relative;
-    min-height: 620px;
-    overflow: hidden;
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    cursor: none;
-  }
-  .leader-card:last-child { border-right: none; }
-
-  /* Photo layer */
-  .leader-photo {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center 20%;
-    filter: grayscale(50%) brightness(0.55) contrast(1.15) saturate(0.8);
-    transition: filter 0.6s ease, transform 0.8s ease;
-    transform-origin: center 30%;
-    transform: scale(1.08);
-  }
-  .leader-card:hover .leader-photo {
-    filter: grayscale(20%) brightness(0.65) contrast(1.15) saturate(1);
-    transform: scale(1.12);
-  }
-
-  /* Gradient overlay */
-  .leader-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to bottom,
-      rgba(1,1,5,0.05) 0%,
-      rgba(1,1,5,0.08) 30%,
-      rgba(1,1,5,0.35) 55%,
-      rgba(1,1,5,0.82) 75%,
-      rgba(1,1,5,0.96) 100%
-    );
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  /* Scan-line accent on hover */
-  .leader-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(to right, transparent, var(--acid), transparent);
-    transform: scaleX(0);
-    transition: transform 0.5s ease;
-    z-index: 3;
-  }
-  .leader-card:hover::before { transform: scaleX(1); }
-
-  /* Content sits above overlays */
-  .leader-content {
-    position: relative;
-    z-index: 2;
-    padding: 2.5rem 3rem 3rem;
-  }
-
-  .leader-index {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 5rem;
-    line-height: 1;
-    color: rgba(240,240,248,0.04);
-    position: absolute;
-    top: 1.5rem;
-    right: 2.5rem;
-    z-index: 2;
-    letter-spacing: 0.05em;
-    pointer-events: none;
-  }
-
-  .leader-role-badge {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.58rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--acid);
-    border: 1px solid rgba(0,255,136,0.3);
-    display: inline-block;
-    padding: 0.3rem 0.8rem;
-    margin-bottom: 1.4rem;
-  }
-
-  .leader-card h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.8rem;
-    letter-spacing: 0.04em;
-    color: var(--white);
-    line-height: 0.95;
-    margin-bottom: 0.4rem;
-  }
-
-  .leader-edu {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    color: rgba(240,240,248,0.4);
-    margin-bottom: 1.2rem;
-    display: block;
-    text-transform: uppercase;
-  }
-
-  .leader-desc {
-    font-size: 0.85rem;
-    color: rgba(240,240,248,0.38);
-    line-height: 1.85;
-    margin-bottom: 1.5rem;
-  }
-
-  .leader-contact {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.08em;
-    color: rgba(240,240,248,0.5);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(240,240,248,0.12);
-    padding-bottom: 0.3rem;
-    transition: color 0.2s, border-color 0.2s;
-    word-break: break-all;
-  }
-  .leader-contact:hover { color: var(--acid); border-color: var(--acid); }
-  .leader-contact svg { flex-shrink: 0; opacity: 0.5; }
-
-  .leader-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.2rem; }
-  .ltag {
-    padding: 0.2rem 0.65rem;
-    border: 1px solid var(--border);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.52rem;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-
-  /* ── TEAM GRID (smaller cards) ── */
+  /* PEOPLE GRID */
   .people-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0;
     border: 1px solid var(--border);
-    border-top: none;
   }
   .person-card {
-    padding: 2.5rem 2.5rem;
+    padding: 3rem 2.5rem;
     border-right: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     position: relative; overflow: hidden;
     transition: background 0.3s;
   }
   .person-card:nth-child(3n) { border-right: none; }
-  .person-card:nth-last-child(-n+3) { border-bottom: none; }
   .person-card::before {
     content: '';
     position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(to right, transparent, var(--plasma), transparent);
+    background: linear-gradient(to right, transparent, var(--acid), transparent);
     transform: scaleX(0); transition: transform 0.4s;
   }
   .person-card:hover::before { transform: scaleX(1); }
-  .person-card:hover { background: rgba(123,47,255,0.04); }
+  .person-card:hover { background: rgba(0,255,136,0.02); }
   .person-avatar {
-    width: 48px; height: 48px;
+    width: 52px; height: 52px;
     border-radius: 50%;
-    background: rgba(123,47,255,0.10);
-    border: 1px solid rgba(123,47,255,0.2);
-    margin-bottom: 1.2rem;
+    background: rgba(123,47,255,0.12);
+    border: 1px solid rgba(123,47,255,0.25);
+    margin-bottom: 1.5rem;
     display: flex; align-items: center; justify-content: center;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem; color: var(--plasma); letter-spacing: 0.05em;
+    font-size: 1.2rem; color: var(--plasma); letter-spacing: 0.05em;
   }
-  .person-card h3 { font-size: 0.95rem; font-weight: 800; color: var(--white); margin-bottom: 0.3rem; }
+  .person-card h3 { font-size: 1rem; font-weight: 800; color: var(--white); margin-bottom: 0.3rem; }
   .person-role {
     font-family: 'Space Mono', monospace;
-    font-size: 0.58rem; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--muted);
-    margin-bottom: 1rem; display: block;
+    font-size: 0.6rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--acid);
+    margin-bottom: 1.2rem; display: block;
   }
-  .person-card p { font-size: 0.82rem; color: rgba(240,240,248,0.3); line-height: 1.8; }
-  .person-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+  .person-card p { font-size: 0.83rem; color: rgba(240,240,248,0.35); line-height: 1.85; }
+  .person-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.2rem; }
   .ptag {
     padding: 0.2rem 0.6rem;
     border: 1px solid var(--border);
     font-family: 'Space Mono', monospace;
-    font-size: 0.52rem; letter-spacing: 0.1em;
+    font-size: 0.55rem; letter-spacing: 0.1em;
     color: var(--muted); text-transform: uppercase;
-  }
-
-  /* Responsive leadership */
-  @media (max-width: 768px) {
-    .leadership-grid { grid-template-columns: 1fr; }
-    .leader-card { min-height: 440px; border-right: none; border-bottom: 1px solid var(--border); }
-    .leader-card:last-child { border-bottom: none; }
-    .leader-content { padding: 2rem 2rem 2.5rem; }
   }
 
   /* INNER PAGE RESPONSIVE */
@@ -1550,99 +1388,51 @@
 
 <section class="inner-section">
   <div class="inner-max">
-    <div class="section-label reveal">Leadership</div>
-
-    <!-- LEADERSHIP — full photo cards -->
-    <div class="leadership-grid reveal">
-
-      <!-- FOUNDER -->
-      <div class="leader-card">
-        <div class="leader-photo" style="background-image: url('assets/IMG_1887.HEIC');"></div>
-        <span class="leader-index">01</span>
-        <div class="leader-content">
-          <span class="leader-role-badge">Founder</span>
-          <h3>Prakul S<br>Hiremath</h3>
-          <span class="leader-edu">B.Tech CSE · VTU Belagavi</span>
-          <p class="leader-desc">Driving the research agenda across all three pillars. Leading strategy, institutional partnerships, and recognition — IISc MSME CoE, Startup Karnataka NAIN 2.0, DD Chandana. The founding force behind Aliens on Earth.</p>
-          <a href="/cdn-cgi/l/email-protection#b9d1d0cbdcd4d8cdd1c9cbd8d2ccd597d8d6dcf9ded4d8d0d597dad6d4" class="leader-contact">
-            <svg width="13" height="10" viewBox="0 0 13 10" fill="none"><rect x="0.5" y="0.5" width="12" height="9" rx="1" stroke="currentColor"/><path d="M1 1L6.5 6L12 1" stroke="currentColor"/></svg>
-            <span class="__cf_email__" data-cfemail="c7afaeb5a2aaa6b3afb7b5a6acb2abe9a6a8a287a0aaa6aeabe9a4a8aa">[email&#160;protected]</span>
-          </a>
-          <div class="leader-tags">
-            <span class="ltag">Research Director</span>
-            <span class="ltag">Energy</span>
-            <span class="ltag">Strategy</span>
-            <span class="ltag">All Domains</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- COO -->
-      <div class="leader-card">
-        <div class="leader-photo" style="background-image: url('assets/IMG_4360.HEIC');"></div>
-        <span class="leader-index">02</span>
-        <div class="leader-content">
-          <span class="leader-role-badge">COO</span>
-          <h3>Harshit<br>Hiremath</h3>
-          <span class="leader-edu">B.E. CSBS · SGBIT Belagavi</span>
-          <p class="leader-desc">Chief Operating Officer at AoE. Overseeing operational execution across the collective's three research pillars. Bridging technical research output with organisational strategy and external partnerships.</p>
-          <div class="leader-tags">
-            <span class="ltag">Operations</span>
-            <span class="ltag">Strategy</span>
-            <span class="ltag">CSBS</span>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /leadership-grid -->
-
-    <!-- TEAM — smaller cards, no photos -->
-    <div class="section-label reveal" style="margin-top:5rem;">Core Team</div>
+    <div class="section-label reveal">Core Team</div>
     <div class="people-grid reveal">
+      <div class="person-card">
+        <div class="person-avatar">AoE</div>
+        <h3>Founder</h3>
+        <span class="person-role">Founder · Research Director</span>
+        <p>Driving the research agenda across all three pillars. Leading strategy, institutional partnerships, and recognition including IISc, Startup Karnataka, and DD Chandana.</p>
+        <div class="person-tags"><span class="ptag">Energy</span><span class="ptag">Strategy</span><span class="ptag">All Domains</span></div>
+      </div>
       <div class="person-card">
         <div class="person-avatar">E</div>
         <h3>Energy Systems Lead</h3>
         <span class="person-role">Research Lead · Energy</span>
-        <p>Leading Green Hydrogen, BIOLOOP, and Urjawave. Expertise in electrochemistry, solar systems engineering, and clean fuel production.</p>
+        <p>Leading Green Hydrogen, BIOLOOP, and Urjawave. Deep expertise in electrochemistry, solar systems engineering, sustainable energy, and clean fuel production.</p>
         <div class="person-tags"><span class="ptag">Green H₂</span><span class="ptag">BIOLOOP</span><span class="ptag">Urjawave</span></div>
       </div>
       <div class="person-card">
         <div class="person-avatar">C</div>
         <h3>Computational Lead</h3>
         <span class="person-role">Research Lead · Foundations</span>
-        <p>Architecting Bayesian inference frameworks, temporal modelling systems, and signal intelligence infrastructure that powers applied work.</p>
+        <p>Architecting the Bayesian inference frameworks, temporal modelling systems, and signal intelligence infrastructure that powers our applied work.</p>
         <div class="person-tags"><span class="ptag">Bayesian</span><span class="ptag">Temporal</span><span class="ptag">ML/RL</span></div>
       </div>
       <div class="person-card">
         <div class="person-avatar">M</div>
         <h3>Medical Systems Lead</h3>
         <span class="person-role">Research Lead · Medical</span>
-        <p>Computational diagnostic frameworks for cardiology and neuroscience. Bridging Bayesian foundations with ECG, EEG, and arrhythmia detection.</p>
+        <p>Developing computational diagnostic frameworks for cardiology and neuroscience. Bridging Bayesian foundations with clinical signal processing — ECG, EEG, arrhythmia detection.</p>
         <div class="person-tags"><span class="ptag">ECG/EEG</span><span class="ptag">Arrhythmia</span><span class="ptag">Diagnostics</span></div>
       </div>
       <div class="person-card">
         <div class="person-avatar">R</div>
         <h3>Research Associate</h3>
         <span class="person-role">Associate · Energy &amp; Foundations</span>
-        <p>Experimental validation across energy projects and mathematical modelling support in the computational foundations pillar.</p>
+        <p>Contributing to experimental validation across energy projects and supporting mathematical modelling work in the computational foundations pillar.</p>
         <div class="person-tags"><span class="ptag">Validation</span><span class="ptag">Maths</span><span class="ptag">Energy</span></div>
-      </div>
-      <div class="person-card">
-        <div class="person-avatar">R₂</div>
-        <h3>Research Associate</h3>
-        <span class="person-role">Associate · Medical</span>
-        <p>Supporting medical signal processing research and contributing to the ECG probabilistic frameworks in development.</p>
-        <div class="person-tags"><span class="ptag">ECG</span><span class="ptag">Signal</span><span class="ptag">Medical</span></div>
       </div>
       <div class="person-card">
         <div class="person-avatar">+</div>
         <h3>Open Roles</h3>
         <span class="person-role">We're Growing</span>
-        <p>Looking for researchers in energy engineering, computational mathematics, and medical signal processing. Independent thinkers who build things that work.</p>
+        <p>Looking for researchers with deep expertise in energy engineering, computational mathematics, and medical signal processing. Independent thinkers who build things that work.</p>
         <div class="person-tags"><span class="ptag">All Domains</span><span class="ptag">Belagavi / Remote</span></div>
       </div>
     </div>
-
   </div>
 </section>
 <div class="divider"></div>
@@ -1700,7 +1490,7 @@
     </div>
   </div>
 </footer>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // CUSTOM CURSOR
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
@@ -1824,4 +1614,14 @@
   revealEls.forEach(el => observer.observe(el));
 
   // NAV SCROLL EFFECT
-  window.addEventListener('scroll',
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 50) {
+      nav.style.borderBottomColor = 'rgba(120,120,200,0.18)';
+    } else {
+      nav.style.borderBottomColor = 'rgba(120,120,200,0.12)';
+    }
+  });
+</script>
+</body>
+</html>
