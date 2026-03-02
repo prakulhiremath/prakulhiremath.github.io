@@ -1293,7 +1293,7 @@
   }
   .leader-card {
     position: relative;
-    min-height: 520px;
+    min-height: 620px;
     overflow: hidden;
     border-right: 1px solid var(--border);
     display: flex;
@@ -1308,14 +1308,15 @@
     position: absolute;
     inset: 0;
     background-size: cover;
-    background-position: center top;
-    filter: grayscale(60%) brightness(0.35) contrast(1.1);
-    transition: filter 0.6s ease, transform 0.6s ease;
-    transform-origin: center;
+    background-position: center 20%;
+    filter: grayscale(50%) brightness(0.55) contrast(1.15) saturate(0.8);
+    transition: filter 0.6s ease, transform 0.8s ease;
+    transform-origin: center 30%;
+    transform: scale(1.08);
   }
   .leader-card:hover .leader-photo {
-    filter: grayscale(30%) brightness(0.45) contrast(1.1);
-    transform: scale(1.03);
+    filter: grayscale(20%) brightness(0.65) contrast(1.15) saturate(1);
+    transform: scale(1.12);
   }
 
   /* Gradient overlay */
@@ -1325,11 +1326,11 @@
     inset: 0;
     background: linear-gradient(
       to bottom,
-      transparent 0%,
-      transparent 20%,
-      rgba(1,1,5,0.5) 55%,
-      rgba(1,1,5,0.92) 80%,
-      rgba(1,1,5,0.98) 100%
+      rgba(1,1,5,0.05) 0%,
+      rgba(1,1,5,0.08) 30%,
+      rgba(1,1,5,0.35) 55%,
+      rgba(1,1,5,0.82) 75%,
+      rgba(1,1,5,0.96) 100%
     );
     z-index: 1;
     pointer-events: none;
@@ -1563,9 +1564,9 @@
           <h3>Prakul S<br>Hiremath</h3>
           <span class="leader-edu">B.Tech CSE · VTU Belagavi</span>
           <p class="leader-desc">Driving the research agenda across all three pillars. Leading strategy, institutional partnerships, and recognition — IISc MSME CoE, Startup Karnataka NAIN 2.0, DD Chandana. The founding force behind Aliens on Earth.</p>
-          <a href="mailto:hiremathprakul.aoe@gmail.com" class="leader-contact">
+          <a href="/cdn-cgi/l/email-protection#b9d1d0cbdcd4d8cdd1c9cbd8d2ccd597d8d6dcf9ded4d8d0d597dad6d4" class="leader-contact">
             <svg width="13" height="10" viewBox="0 0 13 10" fill="none"><rect x="0.5" y="0.5" width="12" height="9" rx="1" stroke="currentColor"/><path d="M1 1L6.5 6L12 1" stroke="currentColor"/></svg>
-            hiremathprakul.aoe@gmail.com
+            <span class="__cf_email__" data-cfemail="c7afaeb5a2aaa6b3afb7b5a6acb2abe9a6a8a287a0aaa6aeabe9a4a8aa">[email&#160;protected]</span>
           </a>
           <div class="leader-tags">
             <span class="ltag">Research Director</span>
@@ -1699,7 +1700,7 @@
     </div>
   </div>
 </footer>
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // CUSTOM CURSOR
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
@@ -1823,14 +1824,4 @@
   revealEls.forEach(el => observer.observe(el));
 
   // NAV SCROLL EFFECT
-  window.addEventListener('scroll', () => {
-    const nav = document.querySelector('nav');
-    if (window.scrollY > 50) {
-      nav.style.borderBottomColor = 'rgba(120,120,200,0.18)';
-    } else {
-      nav.style.borderBottomColor = 'rgba(120,120,200,0.12)';
-    }
-  });
-</script>
-</body>
-</html>
+  window.addEventListener('scroll',
