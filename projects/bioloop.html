@@ -3,73 +3,988 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BIOLOOP – AoE</title>
-<link rel="stylesheet" href="../style.css">
-</head>
+<title>BIOLOOP — AoE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #010105;
+    --deep: #05050f;
+    --ink: #0a0a1a;
+    --acid: #00ff88;
+    --plasma: #7b2fff;
+    --signal: #ff2d6b;
+    --ice: #00cfff;
+    --white: #f0f0f8;
+    --muted: #4a4a6a;
+    --border: rgba(120,120,200,0.12);
+  }
 
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--void);
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  .cursor {
+    position: fixed; width: 12px; height: 12px;
+    background: var(--acid); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s, background 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed; width: 40px; height: 40px;
+    border: 1px solid rgba(0,255,136,0.4); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: transform 0.15s ease, width 0.3s, height 0.3s, border-color 0.3s;
+  }
+
+  #cosmos { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025; z-index: 1; pointer-events: none;
+  }
+
+  .grid-bg {
+    position: fixed; inset: 0;
+    background-image: linear-gradient(rgba(120,120,200,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(120,120,200,0.03) 1px, transparent 1px);
+    background-size: 60px 60px; z-index: 0; pointer-events: none;
+  }
+  .glow-1 { position: fixed; top: -200px; left: -200px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(123,47,255,0.08), transparent 70%); pointer-events: none; z-index: 0; }
+  .glow-2 { position: fixed; bottom: -200px; right: -200px; width: 700px; height: 700px; background: radial-gradient(circle, rgba(0,255,136,0.05), transparent 70%); pointer-events: none; z-index: 0; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 4rem;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(20px);
+    background: rgba(1,1,5,0.7);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 1rem; }
+  .nav-logo img { height: 42px; border-radius: 8px; filter: brightness(1.1); }
+  .nav-wordmark { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.15em; color: var(--white); text-decoration: none; }
+  .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted);
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    transition: color 0.2s; position: relative;
+  }
+  .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--acid); transition: width 0.3s; }
+  .nav-links a:hover { color: var(--acid); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta { background: transparent; border: 1px solid var(--acid); color: var(--acid) !important; padding: 0.5rem 1.4rem; border-radius: 2px; }
+  .nav-cta:hover { background: var(--acid); color: var(--void) !important; }
+  .nav-cta::after { display: none !important; }
+
+  /* HERO */
+  .hero {
+    position: relative; z-index: 2;
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+    padding: 10rem 4rem 4rem;
+    overflow: hidden;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.35em; color: var(--acid);
+    text-transform: uppercase; margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 1s 0.3s forwards;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-eyebrow::before { content: ''; width: 40px; height: 1px; background: var(--acid); opacity: 0.5; }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 13vw, 13rem);
+    line-height: 0.88;
+    letter-spacing: 0.04em;
+    opacity: 0; animation: fadeUp 1s 0.5s forwards;
+  }
+  .hero-title .main { display: block; color: var(--white); }
+  .hero-title .sub {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(0,255,136,0.3);
+    font-size: 0.35em;
+    letter-spacing: 0.25em;
+    margin-top: 0.5rem;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .hero-tagline {
+    margin-top: 2.5rem;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(240,240,248,0.45);
+    max-width: 580px;
+    opacity: 0; animation: fadeUp 1s 0.8s forwards;
+  }
+  .hero-tagline strong { color: var(--acid); font-weight: 700; }
+
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 0.8rem;
+    margin-top: 2.5rem;
+    opacity: 0; animation: fadeUp 1s 1s forwards;
+  }
+  .badge {
+    padding: 0.4rem 1rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+    border: 1px solid var(--border); color: var(--muted);
+  }
+  .badge.highlight { border-color: rgba(0,255,136,0.4); color: var(--acid); }
+  .badge.plasma { border-color: rgba(123,47,255,0.4); color: var(--plasma); }
+  .badge.ice { border-color: rgba(0,207,255,0.3); color: var(--ice); }
+
+  .hero-scroll {
+    position: absolute; bottom: 3rem; left: 4rem;
+    display: flex; align-items: center; gap: 1rem;
+    opacity: 0; animation: fadeUp 1s 1.4s forwards;
+  }
+  .hero-scroll span { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.3em; color: var(--muted); text-transform: uppercase; }
+  .scroll-line { width: 50px; height: 1px; background: linear-gradient(to right, var(--muted), transparent); animation: scrollPulse 2s infinite; }
+
+  /* TICKER */
+  .ticker {
+    position: relative; z-index: 2;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 1rem 0; overflow: hidden;
+    background: rgba(0,255,136,0.02);
+  }
+  .ticker-inner { display: flex; animation: ticker 30s linear infinite; white-space: nowrap; }
+  .ticker-item {
+    padding: 0 3rem;
+    font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); display: flex; align-items: center; gap: 1.5rem;
+  }
+  .ticker-item span { color: var(--acid); }
+
+  /* SECTION COMMONS */
+  section { position: relative; z-index: 2; }
+  .section-label {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--acid); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::before { content: ''; width: 20px; height: 1px; background: var(--acid); }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 5.5rem); line-height: 1; letter-spacing: 0.03em; margin-bottom: 1.5rem; }
+
+  /* METRICS CODE BLOCK */
+  .metrics-section {
+    padding: 8rem 4rem;
+    max-width: 1400px; margin: 0 auto;
+  }
+  .metrics-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+    margin-top: 4rem;
+  }
+  .code-block {
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--acid);
+    padding: 2.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    line-height: 2;
+    color: rgba(240,240,248,0.6);
+    overflow: hidden;
+    position: relative;
+  }
+  .code-block::before {
+    content: 'BIOLOOP.yaml';
+    display: block;
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--acid); margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border); padding-bottom: 1rem;
+  }
+  .code-key { color: var(--ice); }
+  .code-val { color: var(--white); }
+  .code-val.green { color: var(--acid); }
+  .code-val.purple { color: var(--plasma); }
+  .code-comment { color: var(--muted); }
+  .code-indent { padding-left: 1.5rem; }
+  .code-indent2 { padding-left: 3rem; }
+
+  .stats-vertical { display: flex; flex-direction: column; gap: 0; }
+  .stat-row {
+    display: flex; align-items: flex-end; gap: 1.5rem;
+    padding: 2rem 0; border-bottom: 1px solid var(--border);
+  }
+  .stat-big {
+    font-family: 'Bebas Neue', sans-serif; font-size: 4.5rem; line-height: 1;
+    background: linear-gradient(135deg, var(--white), var(--muted));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    flex-shrink: 0;
+  }
+  .stat-big.green { background: linear-gradient(135deg, var(--acid), rgba(0,255,136,0.4)); -webkit-background-clip: text; background-clip: text; }
+  .stat-big.ice { background: linear-gradient(135deg, var(--ice), rgba(0,207,255,0.4)); -webkit-background-clip: text; background-clip: text; }
+  .stat-info { padding-bottom: 0.5rem; }
+  .stat-info strong { display: block; font-size: 0.88rem; font-weight: 800; margin-bottom: 0.3rem; }
+  .stat-info span { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
+
+  /* TIMELINE */
+  .timeline-section {
+    padding: 8rem 4rem;
+    background: linear-gradient(180deg, transparent 0%, rgba(123,47,255,0.02) 50%, transparent 100%);
+  }
+  .timeline-inner { max-width: 1400px; margin: 0 auto; }
+  .timeline-header { margin-bottom: 6rem; }
+
+  .timeline {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute; top: 50%; left: 0; right: 0; height: 1px;
+    background: linear-gradient(to right, var(--plasma), var(--acid));
+    opacity: 0.15; z-index: 0;
+  }
+
+  .phase {
+    padding: 3rem 2.5rem;
+    border-right: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    transition: background 0.4s;
+  }
+  .phase:last-child { border-right: none; }
+  .phase::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, transparent, var(--acid), transparent);
+    transform: scaleX(0); transition: transform 0.4s;
+  }
+  .phase:hover::after { transform: scaleX(1); }
+  .phase:hover { background: rgba(0,255,136,0.02); }
+
+  .phase-num {
+    font-family: 'Bebas Neue', sans-serif; font-size: 5rem;
+    color: rgba(240,240,248,0.04); line-height: 1; margin-bottom: 1rem;
+  }
+  .phase-label {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.25em;
+    color: var(--acid); text-transform: uppercase; margin-bottom: 0.8rem;
+  }
+  .phase h3 { font-size: 1rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1rem; }
+  .phase p { font-size: 0.82rem; color: rgba(240,240,248,0.4); line-height: 1.8; }
+  .phase-tags { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 1.5rem; }
+  .phase-tag {
+    font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em;
+    color: var(--muted); display: flex; align-items: center; gap: 0.5rem;
+  }
+  .phase-tag::before { content: '→'; color: var(--acid); opacity: 0.6; }
+
+  /* ARCHITECTURE */
+  .arch-section { padding: 8rem 4rem; }
+  .arch-inner { max-width: 1400px; margin: 0 auto; }
+  .arch-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; margin-bottom: 5rem; }
+  .arch-desc { color: rgba(240,240,248,0.45); line-height: 1.9; font-size: 1rem; max-width: 400px; }
+
+  .arch-modules {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; border: 1px solid var(--border);
+  }
+  .module {
+    padding: 2.5rem 2rem; border-right: 1px solid var(--border);
+    position: relative; overflow: hidden; transition: background 0.3s;
+  }
+  .module:last-child { border-right: none; }
+  .module::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(to right, transparent, var(--ice), transparent);
+    transform: scaleX(0); transition: transform 0.4s;
+  }
+  .module:hover::before { transform: scaleX(1); }
+  .module:hover { background: rgba(0,207,255,0.03); }
+
+  .module-icon {
+    width: 40px; height: 40px; margin-bottom: 1.5rem;
+  }
+  .module-num {
+    font-family: 'Bebas Neue', sans-serif; font-size: 3rem;
+    color: rgba(240,240,248,0.05); line-height: 1; margin-bottom: 1rem;
+  }
+  .module h4 { font-size: 0.88rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.8rem; }
+  .module p { font-size: 0.78rem; color: rgba(240,240,248,0.38); line-height: 1.75; }
+  .module-tag {
+    display: inline-block; margin-top: 1rem; padding: 0.25rem 0.6rem;
+    font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase;
+    border: 1px solid var(--border); color: var(--muted);
+  }
+
+  /* DEPLOYMENT */
+  .deploy-section {
+    padding: 8rem 4rem;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,207,255,0.02) 50%, transparent 100%);
+  }
+  .deploy-inner { max-width: 1400px; margin: 0 auto; }
+  .deploy-header { margin-bottom: 5rem; }
+  .deploy-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1.5px; background: var(--border);
+  }
+  .deploy-card {
+    background: var(--deep); padding: 2.5rem 2rem;
+    position: relative; overflow: hidden; transition: background 0.3s;
+  }
+  .deploy-card:hover { background: rgba(5,5,15,0.9); }
+  .deploy-card::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(0,255,136,0.06), transparent 60%);
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .deploy-card:hover::after { opacity: 1; }
+  .deploy-num {
+    font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;
+    color: rgba(240,240,248,0.06); line-height: 1; margin-bottom: 1rem; position: relative; z-index: 1;
+  }
+  .deploy-card h4 {
+    font-size: 0.88rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 0.5rem; position: relative; z-index: 1;
+  }
+  .deploy-card p { font-size: 0.78rem; color: rgba(240,240,248,0.35); line-height: 1.7; position: relative; z-index: 1; }
+  .deploy-icon { font-size: 1.5rem; margin-bottom: 1rem; position: relative; z-index: 1; opacity: 0.7; }
+
+  /* RESEARCH OUTPUT */
+  .research-section { padding: 8rem 4rem; }
+  .research-inner { max-width: 1400px; margin: 0 auto; }
+  .research-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 4rem; }
+  .research-card {
+    border: 1px solid var(--border); padding: 3rem;
+    position: relative; overflow: hidden; transition: border-color 0.3s, background 0.3s;
+  }
+  .research-card:hover { border-color: rgba(0,255,136,0.3); background: rgba(0,255,136,0.02); }
+  .research-card-type {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+    margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem;
+  }
+  .research-card-type::before { content: ''; width: 12px; height: 1px; background: currentColor; }
+  .research-card h3 { font-size: 1rem; font-weight: 800; line-height: 1.5; margin-bottom: 1rem; }
+  .research-card p { font-size: 0.82rem; color: rgba(240,240,248,0.4); line-height: 1.8; }
+  .research-meta {
+    display: flex; gap: 1.5rem; margin-top: 1.5rem; padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .research-meta span {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase;
+  }
+  .research-meta .highlight { color: var(--acid); }
+
+  /* STATUS BLOCK */
+  .status-section {
+    padding: 6rem 4rem;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    background: rgba(123,47,255,0.02);
+  }
+  .status-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); gap: 2rem; }
+  .status-item { padding: 0 2rem; border-right: 1px solid var(--border); }
+  .status-item:last-child { border-right: none; }
+  .status-label { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.25em; color: var(--muted); text-transform: uppercase; margin-bottom: 0.8rem; }
+  .status-val { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.05em; }
+  .status-val.green { color: var(--acid); }
+  .status-val.ice { color: var(--ice); }
+  .status-val.purple { color: var(--plasma); }
+  .status-dot-row { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.3rem; }
+  .dot-active { width: 6px; height: 6px; background: var(--acid); border-radius: 50%; animation: blink 2s infinite; }
+
+  /* DIVIDER */
+  .divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, var(--border), transparent); position: relative; z-index: 2; }
+
+  /* FOOTER */
+  footer {
+    position: relative; z-index: 2;
+    padding: 6rem 4rem 3rem;
+    border-top: 1px solid var(--border);
+  }
+  .footer-inner { max-width: 1400px; margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 5rem; }
+  .footer-brand h2 { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; letter-spacing: 0.06em; margin-bottom: 1rem; }
+  .footer-brand p { font-size: 0.85rem; color: rgba(240,240,248,0.35); line-height: 1.8; max-width: 280px; }
+  .footer-col h4 { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
+  .footer-col a { display: block; color: rgba(240,240,248,0.4); text-decoration: none; font-size: 0.85rem; margin-bottom: 0.8rem; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--white); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 2rem; border-top: 1px solid var(--border);
+    font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em;
+  }
+  .footer-status { display: flex; align-items: center; gap: 0.5rem; }
+  .status-dot-f { width: 6px; height: 6px; background: var(--acid); border-radius: 50%; animation: blink 2s infinite; }
+
+  /* SCROLL REVEAL */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes scrollPulse { 0%,100%{ opacity:0.3; } 50%{ opacity:1; } }
+  @keyframes blink { 0%,100%{ opacity:1; } 50%{ opacity:0.3; } }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    nav { padding: 1.5rem 2rem; }
+    .hero { padding: 9rem 2rem 4rem; }
+    .metrics-section, .timeline-section, .arch-section, .deploy-section, .research-section, .status-section { padding-left: 2rem; padding-right: 2rem; }
+    .metrics-grid { grid-template-columns: 1fr; }
+    .timeline { grid-template-columns: 1fr 1fr; }
+    .phase { border-bottom: 1px solid var(--border); }
+    .arch-header { grid-template-columns: 1fr; }
+    .arch-modules { grid-template-columns: 1fr 1fr; }
+    .deploy-grid { grid-template-columns: 1fr 1fr; }
+    .research-grid { grid-template-columns: 1fr; }
+    .status-inner { grid-template-columns: repeat(3, 1fr); }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .timeline { grid-template-columns: 1fr; }
+    .arch-modules { grid-template-columns: 1fr; }
+    .deploy-grid { grid-template-columns: 1fr; }
+    .status-inner { grid-template-columns: 1fr 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
 <body>
 
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="grid-bg"></div>
+<div class="glow-1"></div>
+<div class="glow-2"></div>
+<canvas id="cosmos"></canvas>
+
+<!-- NAV -->
 <nav>
-  <div class="logo">AoE</div>
+  <div class="nav-logo">
+    <a href="../index.html" class="nav-wordmark">AoE</a>
+  </div>
   <div class="nav-links">
-    <a href="../index.html">Home</a>
     <a href="../research.html">Research</a>
     <a href="../projects.html">Projects</a>
     <a href="../blog.html">Blog</a>
     <a href="../people.html">People</a>
+    <a href="../publications.html">Publications</a>
+    <a href="../blog.html" class="nav-cta">Research Log</a>
   </div>
 </nav>
 
-<main class="page">
-
-<h1>BIOLOOP</h1>
-
-<section>
-  <h2>Overview</h2>
-  <p>
-    BIOLOOP is an algae-based carbon capture and fuel conversion system.
-    The project integrates cultivation, lipid extraction, and downstream
-    fuel pathways into a closed-loop architecture.
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Energy Systems · Carbon Capture · AoE Project</div>
+  <h1 class="hero-title">
+    <span class="main">BIOLOOP</span>
+    <span class="sub">CARBON → VALUE SYSTEMS</span>
+  </h1>
+  <p class="hero-tagline">
+    A <strong>carbon-to-fuel closed-loop architecture</strong> — integrating industrial CO₂ capture,
+    algal bioconversion, and computational carbon accounting into a <strong>distributed urban mesh network</strong>.
+    From concept to supported startup.
   </p>
+  <div class="hero-badges">
+    <span class="badge highlight">NAIN 2.0 · Govt. of Karnataka</span>
+    <span class="badge highlight">₹1,00,000 Grant</span>
+    <span class="badge plasma">Incubated · SGBIT Belagavi</span>
+    <span class="badge ice">PHI · IIT Dharwad</span>
+    <span class="badge">AAC 2025 · Mumbai</span>
+    <span class="badge">AI Impact Summit · Casebook</span>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
 </section>
 
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">BIOLOOP <span>·</span> Carbon Capture</span>
+    <span class="ticker-item">CCUS Systems <span>·</span> Algal Bioreactor</span>
+    <span class="ticker-item">Urban Mesh Network <span>·</span> Modular Architecture</span>
+    <span class="ticker-item">SAF Pathway <span>·</span> Green H₂</span>
+    <span class="ticker-item">NAIN 2.0 <span>·</span> Karnataka Startup</span>
+    <span class="ticker-item">SGBIT Incubation <span>·</span> IIT Dharwad PHI</span>
+    <span class="ticker-item">Edge AI <span>·</span> Bioaerosol Monitoring</span>
+    <span class="ticker-item">BIOLOOP <span>·</span> Carbon Capture</span>
+    <span class="ticker-item">CCUS Systems <span>·</span> Algal Bioreactor</span>
+    <span class="ticker-item">Urban Mesh Network <span>·</span> Modular Architecture</span>
+    <span class="ticker-item">SAF Pathway <span>·</span> Green H₂</span>
+    <span class="ticker-item">NAIN 2.0 <span>·</span> Karnataka Startup</span>
+    <span class="ticker-item">SGBIT Incubation <span>·</span> IIT Dharwad PHI</span>
+    <span class="ticker-item">Edge AI <span>·</span> Bioaerosol Monitoring</span>
+  </div>
+</div>
+
+<!-- METRICS + CODE -->
 <section>
-  <h2>Research Domain</h2>
-  <p>
-    Energy Systems → Carbon Capture → Biofuel Conversion
-  </p>
+  <div class="metrics-section">
+    <div class="reveal">
+      <div class="section-label">Project Status</div>
+      <h2 class="section-title">System<br>Manifest</h2>
+    </div>
+    <div class="metrics-grid reveal">
+      <div class="code-block">
+<div><span class="code-comment"># BIOLOOP System Definition</span></div>
+<div>&nbsp;</div>
+<div><span class="code-key">Project_Name:</span> <span class="code-val green">BIOLOOP</span></div>
+<div>&nbsp;</div>
+<div><span class="code-key">Origin:</span></div>
+<div class="code-indent"><span class="code-key">Initial_Focus:</span> <span class="code-val">Carbon Capture</span></div>
+<div class="code-indent"><span class="code-key">Expansion:</span> <span class="code-val">CCUS + Algae Biofuel Systems</span></div>
+<div class="code-indent"><span class="code-key">Current_Scope:</span> <span class="code-val green">Distributed Urban Carbon Mesh</span></div>
+<div>&nbsp;</div>
+<div><span class="code-key">Funding:</span></div>
+<div class="code-indent"><span class="code-key">Program:</span> <span class="code-val">NAIN 2.0 (Govt. of Karnataka)</span></div>
+<div class="code-indent"><span class="code-key">Grant:</span> <span class="code-val green">INR 100,000</span></div>
+<div class="code-indent"><span class="code-key">Status:</span> <span class="code-val green">Supported Startup Karnataka</span></div>
+<div>&nbsp;</div>
+<div><span class="code-key">Incubation:</span></div>
+<div class="code-indent"><span class="code-key">HI:</span> <span class="code-val purple">SGBIT Belagavi</span></div>
+<div class="code-indent"><span class="code-key">PHI:</span> <span class="code-val purple">IIT Dharwad</span></div>
+<div>&nbsp;</div>
+<div><span class="code-key">Core_Metrics:</span></div>
+<div class="code-indent"><span class="code-key">CO2_Input_Model:</span> <span class="code-val">Industrial + Urban Sources</span></div>
+<div class="code-indent"><span class="code-key">Conversion_Pathway:</span> <span class="code-val">Algal Lipid Platform</span></div>
+<div class="code-indent"><span class="code-key">Fuel_Output_Target:</span> <span class="code-val green">Biodiesel / SAF</span></div>
+<div class="code-indent"><span class="code-key">Net_CO2_Reduction:</span> <span class="code-val">In Development</span></div>
+<div class="code-indent"><span class="code-key">EROI_Model:</span> <span class="code-val">In Development</span></div>
+<div class="code-indent"><span class="code-key">IP_Status:</span> <span class="code-val">Drafting / Filing Stage</span></div>
+<div>&nbsp;</div>
+<div><span class="code-key">System_Type:</span></div>
+<div class="code-indent"><span class="code-val green">Modular · Scalable · Urban Mesh</span></div>
+      </div>
+
+      <div class="stats-vertical">
+        <div class="stat-row">
+          <div class="stat-big green">₹1L</div>
+          <div class="stat-info">
+            <strong>Startup Grant</strong>
+            <span>NAIN 2.0 · Government of Karnataka</span>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-big ice">4</div>
+          <div class="stat-info">
+            <strong>Evolution Phases</strong>
+            <span>Capture → CCUS → Urban Mesh → Startup</span>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-big">94.6%</div>
+          <div class="stat-info">
+            <strong>AI Classification Accuracy</strong>
+            <span>Bioaerosol Stress Detection · AAC 2025</span>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-big green">8</div>
+          <div class="stat-info">
+            <strong>Deployment Environments</strong>
+            <span>Office · College · Hospital · Airport + more</span>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-big ice">&lt;10m</div>
+          <div class="stat-info">
+            <strong>Edge AI Inference</strong>
+            <span>Sub-10 min · Economical industrial deployment</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section>
-  <h2>System Architecture</h2>
-  <p>
-    • Photobioreactor cultivation  
-    • Carbon feed integration  
-    • Biomass harvesting  
-    • Lipid extraction  
-    • Fuel synthesis  
-  </p>
+<div class="divider"></div>
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+  <div class="timeline-inner">
+    <div class="timeline-header reveal">
+      <div class="section-label">Project Evolution</div>
+      <h2 class="section-title">How It<br>Grew</h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div class="phase-label">Phase 1 · Foundation</div>
+        <h3>Carbon Capture</h3>
+        <p>Industrial CO₂ capture and utilization. Post-combustion concepts, algal bioreactor-based carbon fixation, lipid extraction for biodiesel, and carbon-to-fuel cycle modeling.</p>
+        <div class="phase-tags">
+          <span class="phase-tag">CO₂ Capture</span>
+          <span class="phase-tag">Algal Bioreactor</span>
+          <span class="phase-tag">Lipid → Biodiesel</span>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div class="phase-label">Phase 2 · Engineering</div>
+        <h3>CCUS Systems</h3>
+        <p>Formal carbon-cycle engineering platform. Industrial flue gas integration, continuous cultivation, lipid yield optimization, EROI modeling, and SAF pathway design.</p>
+        <div class="phase-tags">
+          <span class="phase-tag">Industrial Flue Gas</span>
+          <span class="phase-tag">EROI Modeling</span>
+          <span class="phase-tag">SAF Pathway</span>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div class="phase-label">Phase 3 · Scale</div>
+        <h3>Urban Carbon Mesh</h3>
+        <p>Shift from isolated plants to distributed systems. Urban CO₂ capture + distributed photobioreactors + decentralized energy output with sensor networks and optimization engines.</p>
+        <div class="phase-tags">
+          <span class="phase-tag">Urban Mesh Network</span>
+          <span class="phase-tag">Sensor Layer</span>
+          <span class="phase-tag">Carbon Accounting</span>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div class="phase-label">Phase 4 · Now</div>
+        <h3>Startup Support</h3>
+        <p>Institutional backing secured. NAIN 2.0 grant, SGBIT incubation, IIT Dharwad PHI engagement, AAC 2025 presentation, and AI Impact Summit publication.</p>
+        <div class="phase-tags">
+          <span class="phase-tag">NAIN 2.0 · ₹1L Grant</span>
+          <span class="phase-tag">SGBIT Incubation</span>
+          <span class="phase-tag">IIT Dharwad PHI</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section>
-  <h2>Status</h2>
-  <p>
-    Concept design and system modeling in progress.
-  </p>
+<div class="divider"></div>
+
+<!-- SYSTEM ARCHITECTURE -->
+<section class="arch-section">
+  <div class="arch-inner">
+    <div class="arch-header reveal">
+      <div>
+        <div class="section-label">Technical Pillars</div>
+        <h2 class="section-title">System<br>Architecture</h2>
+      </div>
+      <p class="arch-desc">
+        Four interlocking modules that form the BIOLOOP closed-loop pipeline — from raw CO₂ intake
+        through biological conversion, downstream processing, and real-time computational oversight.
+      </p>
+    </div>
+    <div class="arch-modules reveal">
+      <div class="module">
+        <div class="module-num">01</div>
+        <svg class="module-icon" viewBox="0 0 40 40" fill="none">
+          <path d="M20 4 L20 36 M4 20 L36 20" stroke="#00cfff" stroke-width="1.2"/>
+          <circle cx="20" cy="20" r="16" stroke="#00cfff" stroke-width="0.8" stroke-dasharray="3 3"/>
+          <circle cx="20" cy="20" r="4" fill="#00cfff" opacity="0.6"/>
+        </svg>
+        <h4>Carbon Capture Module</h4>
+        <p>Industrial and distributed capture interface. Post-combustion CO₂ intake from flue gas, urban ambient capture nodes, and photobioreactor feed integration.</p>
+        <span class="module-tag">Input Layer</span>
+      </div>
+      <div class="module">
+        <div class="module-num">02</div>
+        <svg class="module-icon" viewBox="0 0 40 40" fill="none">
+          <ellipse cx="20" cy="20" rx="14" ry="18" stroke="#00ff88" stroke-width="0.8" stroke-dasharray="2 2"/>
+          <path d="M10 15 Q20 8 30 15 Q36 20 30 25 Q20 32 10 25 Q4 20 10 15Z" stroke="#00ff88" stroke-width="1" fill="none" opacity="0.4"/>
+          <circle cx="20" cy="20" r="3" fill="#00ff88" opacity="0.8"/>
+        </svg>
+        <h4>Biological Conversion</h4>
+        <p>High-lipid algae strains in controlled photobioreactors. Bidirectional mixing system, strain optimization, and continuous cultivation protocols for maximum lipid yield.</p>
+        <span class="module-tag">Core Process</span>
+      </div>
+      <div class="module">
+        <div class="module-num">03</div>
+        <svg class="module-icon" viewBox="0 0 40 40" fill="none">
+          <rect x="6" y="10" width="28" height="20" stroke="#ff2d6b" stroke-width="0.8" rx="1"/>
+          <path d="M14 10 L14 30 M26 10 L26 30" stroke="#ff2d6b" stroke-width="0.6" opacity="0.5"/>
+          <path d="M6 20 L34 20" stroke="#ff2d6b" stroke-width="0.6" opacity="0.5"/>
+          <circle cx="20" cy="20" r="3" fill="#ff2d6b" opacity="0.6"/>
+        </svg>
+        <h4>Extraction & Processing</h4>
+        <p>Lipid extraction pipeline, transesterification for biodiesel, and Sustainable Aviation Fuel (SAF) pathway adaptation. Biomass residue recovery and valorization loops.</p>
+        <span class="module-tag">Output Layer</span>
+      </div>
+      <div class="module">
+        <div class="module-num">04</div>
+        <svg class="module-icon" viewBox="0 0 40 40" fill="none">
+          <rect x="4" y="4" width="14" height="14" stroke="#7b2fff" stroke-width="0.8"/>
+          <rect x="22" y="4" width="14" height="14" stroke="#7b2fff" stroke-width="0.8" opacity="0.5"/>
+          <rect x="4" y="22" width="14" height="14" stroke="#7b2fff" stroke-width="0.8" opacity="0.5"/>
+          <rect x="22" y="22" width="14" height="14" stroke="#7b2fff" stroke-width="0.8"/>
+          <line x1="18" y1="11" x2="22" y2="11" stroke="#7b2fff" stroke-width="0.8"/>
+          <line x1="11" y1="18" x2="11" y2="22" stroke="#7b2fff" stroke-width="0.8"/>
+          <line x1="29" y1="18" x2="29" y2="22" stroke="#7b2fff" stroke-width="0.8"/>
+          <line x1="18" y1="29" x2="22" y2="29" stroke="#7b2fff" stroke-width="0.8"/>
+        </svg>
+        <h4>Computational Layer</h4>
+        <p>Net CO₂ impact model, EROI calculator, process optimization engine, carbon credit quantification logic, and Edge AI bioaerosol monitoring for real-time reactor control.</p>
+        <span class="module-tag">Intelligence</span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section>
-  <h2>Publications & Notes</h2>
-  <p>
-    Technical notes and experimental logs will be published in the Research Log.
-  </p>
+<div class="divider"></div>
+
+<!-- STATUS BAR -->
+<div class="status-section reveal">
+  <div class="status-inner">
+    <div class="status-item">
+      <div class="status-label">Startup Status</div>
+      <div class="status-val green">Active</div>
+      <div class="status-dot-row"><div class="dot-active"></div><span style="font-family:'Space Mono',monospace;font-size:0.58rem;color:var(--muted);letter-spacing:0.1em;">Karnataka Supported</span></div>
+    </div>
+    <div class="status-item">
+      <div class="status-label">Funding</div>
+      <div class="status-val green">₹1,00,000</div>
+      <div class="status-label" style="margin-top:0.3rem;">NAIN 2.0</div>
+    </div>
+    <div class="status-item">
+      <div class="status-label">Incubation</div>
+      <div class="status-val ice">SGBIT</div>
+      <div class="status-label" style="margin-top:0.3rem;">Belagavi</div>
+    </div>
+    <div class="status-item">
+      <div class="status-label">PHI Engagement</div>
+      <div class="status-val purple">IIT</div>
+      <div class="status-label" style="margin-top:0.3rem;">Dharwad</div>
+    </div>
+    <div class="status-item">
+      <div class="status-label">IP Status</div>
+      <div class="status-val" style="font-size:1.1rem;font-family:'Space Mono',monospace;letter-spacing:0.05em;line-height:1.4;">Drafting<br>/ Filing</div>
+    </div>
+  </div>
+</div>
+
+<!-- DEPLOYMENT ENVIRONMENTS -->
+<section class="deploy-section">
+  <div class="deploy-inner">
+    <div class="deploy-header reveal">
+      <div class="section-label">Urban Mesh Network</div>
+      <h2 class="section-title">Deployment<br>Environments</h2>
+    </div>
+    <div class="deploy-grid reveal">
+      <div class="deploy-card">
+        <div class="deploy-icon">🏢</div>
+        <div class="deploy-num">01</div>
+        <h4>Office</h4>
+        <p>Building-integrated photobioreactor panels. CO₂ from HVAC recirculation captured and converted in-situ.</p>
+      </div>
+      <div class="deploy-card">
+        <div class="deploy-icon">🎓</div>
+        <div class="deploy-num">02</div>
+        <h4>College</h4>
+        <p>Campus-scale distributed units. Research and educational integration alongside active carbon capture.</p>
+      </div>
+      <div class="deploy-card">
+        <div class="deploy-icon">🏥</div>
+        <div class="deploy-num">03</div>
+        <h4>Hospital</h4>
+        <p>Clean-air and waste CO₂ utilization. High-footfall zones converted to productive carbon sinks.</p>
+      </div>
+      <div class="deploy-card">
+        <div class="deploy-icon">🍽️</div>
+        <div class="deploy-num">04</div>
+        <h4>Food Court</h4>
+        <p>Combustion and respiration CO₂-rich environments. Ideal high-concentration capture nodes.</p>
+      </div>
+      <div class="deploy-card">
+        <div class="deploy-icon">🛍️</div>
+        <div class="deploy-num">05</div>
+        <h4>Mall</h4>
+        <p>Large-scale atrium deployments. Aesthetic bioreactor installations doubling as air quality systems.</p>
+      </div>
+      <div class="deploy-card">
+        <div class="deploy-icon">🚇</div>
+        <div class="deploy-num">06</div>
+        <h4>Metro</h4>
+        <p>Transit infrastructure integration. High-density urban CO₂ capture along commuter corridors.</p>
+      </div>
+      <div class="deploy-card">
+        <div class="deploy-icon">🚌</div>
+        <div class="deploy-num">07</div>
+        <h4>Bus & Rail</h4>
+        <p>Station and terminal deployments. Exhaust-adjacent capture units converting transport emissions.</p>
+      </div>
+      <div class="deploy-card">
+        <div class="deploy-icon">✈️</div>
+        <div class="deploy-num">08</div>
+        <h4>Airport</h4>
+        <p>High-emission environment with SAF pathway synergy. Direct biofuel output feeds aviation supply chain.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
-</main>
+<div class="divider"></div>
 
+<!-- RESEARCH OUTPUT -->
+<section class="research-section">
+  <div class="research-inner">
+    <div class="reveal">
+      <div class="section-label">Published Work</div>
+      <h2 class="section-title">Research<br>Output</h2>
+    </div>
+    <div class="research-grid reveal">
+      <div class="research-card">
+        <div class="research-card-type" style="color: var(--acid);">Conference Poster · AAC 2025</div>
+        <h3>Real-Time Monitoring of Bioaerosol Emissions in Algae-Based Hydrogen Reactors Using Low-Cost Sensors and AI</h3>
+        <p>A non-invasive "aerosol fingerprinting" framework using low-cost sensors and Edge-AI to analyze reactor headspace emissions. 94.6% classification accuracy (P=0.91, R=0.88) with 3–4 hour early warning advantage over optical methods.</p>
+        <div class="research-meta">
+          <span>Prakul Sunil Hiremath</span>
+          <span>·</span>
+          <span class="highlight">VTU Belagavi</span>
+          <span>·</span>
+          <span>Mumbai, Dec 2025</span>
+        </div>
+      </div>
+      <div class="research-card">
+        <div class="research-card-type" style="color: var(--ice);">Case Study · AI Impact Summit</div>
+        <h3>BIOLOOP — Casebook on AI in Energy Systems</h3>
+        <p>Published in the India AI Impact Summit Casebook. Documents the computational and AI-driven dimensions of the BIOLOOP architecture — edge inference, anomaly detection, and carbon accounting frameworks.</p>
+        <div class="research-meta">
+          <span>India AI Impact Summit</span>
+          <span>·</span>
+          <span class="highlight">Casebook Publication</span>
+          <span>·</span>
+          <span>2024</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  © 2026 AoE – Independent Research Collective
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h2>AoE</h2>
+        <p>Aliens on Earth. An independent research collective working at the edge of what's known.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Research</h4>
+        <a href="../research.html">Overview</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../publications.html">Publications</a>
+      </div>
+      <div class="footer-col">
+        <h4>Collective</h4>
+        <a href="../people.html">People</a>
+        <a href="../blog.html">Research Log</a>
+      </div>
+      <div class="footer-col">
+        <h4>BIOLOOP</h4>
+        <a href="#timeline">Evolution</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#deployment">Deployment</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 AoE — Aliens on Earth · BIOLOOP Project</span>
+      <div class="footer-status">
+        <div class="status-dot-f"></div>
+        <span>Startup Active · Karnataka</span>
+      </div>
+    </div>
+  </div>
 </footer>
 
+<script>
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  });
+  function animRing() {
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+  document.querySelectorAll('a, button, .phase, .module, .deploy-card, .research-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+      ring.style.width = '60px'; ring.style.height = '60px';
+      ring.style.borderColor = 'rgba(0,255,136,0.6)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+      ring.style.width = '40px'; ring.style.height = '40px';
+      ring.style.borderColor = 'rgba(0,255,136,0.4)';
+    });
+  });
+
+  // COSMOS
+  const canvas = document.getElementById('cosmos');
+  const ctx = canvas.getContext('2d');
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize(); window.addEventListener('resize', resize);
+  const STARS = Array.from({length: 160}, () => ({ x: Math.random(), y: Math.random(), r: Math.random()*1.2+0.2, o: Math.random()*0.5+0.1, phase: Math.random()*Math.PI*2 }));
+  const PARTICLES = Array.from({length: 25}, () => ({
+    x: Math.random()*window.innerWidth, y: Math.random()*window.innerHeight,
+    vx: (Math.random()-0.5)*0.35, vy: (Math.random()-0.5)*0.35,
+    r: Math.random()*1.4+0.4,
+    color: ['#00ff88','#7b2fff','#00cfff'][Math.floor(Math.random()*3)],
+    o: Math.random()*0.35+0.1
+  }));
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0,0,canvas.width,canvas.height); t += 0.01;
+    STARS.forEach(s => {
+      const fl = s.o + Math.sin(t*3+s.phase)*0.12;
+      ctx.beginPath(); ctx.arc(s.x*canvas.width, s.y*canvas.height, s.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(200,210,255,${fl})`; ctx.fill();
+    });
+    PARTICLES.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if(p.x<0) p.x=canvas.width; if(p.x>canvas.width) p.x=0;
+      if(p.y<0) p.y=canvas.height; if(p.y>canvas.height) p.y=0;
+      ctx.globalAlpha = p.o*(0.5+Math.sin(t+p.x*0.01)*0.5);
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle = p.color; ctx.fill(); ctx.globalAlpha = 1;
+    });
+    PARTICLES.forEach((a,i) => {
+      PARTICLES.slice(i+1).forEach(b => {
+        const dx=a.x-b.x, dy=a.y-b.y, d=Math.sqrt(dx*dx+dy*dy);
+        if(d<140){ ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.strokeStyle=`rgba(120,120,200,${0.06*(1-d/140)})`; ctx.lineWidth=0.5; ctx.stroke(); }
+      });
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  // SCROLL REVEAL
+  const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // NAV SCROLL
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.borderBottomColor = window.scrollY > 50 ? 'rgba(120,120,200,0.18)' : 'rgba(120,120,200,0.12)';
+  });
+</script>
 </body>
 </html>
