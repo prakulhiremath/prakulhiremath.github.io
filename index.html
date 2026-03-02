@@ -82,43 +82,35 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.5rem 4rem;
+    padding: 0.85rem 3rem;
     border-bottom: 1px solid var(--border);
     backdrop-filter: blur(20px);
-    background: rgba(1,1,5,0.7);
+    background: rgba(1,1,5,0.75);
   }
 
   .nav-logo {
     display: flex;
     align-items: center;
-    gap: 1rem;
   }
 
   .nav-logo img {
-    height: 42px;
-    border-radius: 8px;
+    height: 36px;
+    border-radius: 6px;
     filter: brightness(1.1);
-  }
-
-  .nav-wordmark {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem;
-    letter-spacing: 0.15em;
-    color: var(--white);
   }
 
   .nav-links {
     display: flex;
-    gap: 2.5rem;
+    gap: 1.6rem;
     align-items: center;
   }
 
   .nav-links a {
     text-decoration: none;
     color: var(--muted);
-    font-size: 0.78rem;
+    font-size: 0.65rem;
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.13em;
     text-transform: uppercase;
     transition: color 0.2s;
     position: relative;
@@ -140,7 +132,7 @@
     background: transparent;
     border: 1px solid var(--acid);
     color: var(--acid) !important;
-    padding: 0.5rem 1.4rem;
+    padding: 0.35rem 0.9rem;
     border-radius: 2px;
   }
 
@@ -895,13 +887,6 @@
     margin-bottom: 5rem;
   }
 
-  .footer-brand h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3rem;
-    letter-spacing: 0.06em;
-    margin-bottom: 1rem;
-  }
-
   .footer-brand p {
     font-size: 0.85rem;
     color: rgba(240,240,248,0.35);
@@ -1116,14 +1101,12 @@
 <nav>
   <div class="nav-logo">
     <img src="assets/AOE.jpeg" alt="AoE Logo">
-    <span class="nav-wordmark">AoE</span>
   </div>
   <div class="nav-links">
     <a href="about.html">About</a>
     <a href="research.html">Research</a>
     <a href="projects.html">Projects</a>
     <a href="publications.html">Publications</a>
-    <a href="news.html">News</a>
     <a href="people.html">People</a>
     <a href="contact.html">Contact</a>
     <a href="blog.html" class="nav-cta">Research Log</a>
@@ -1414,12 +1397,12 @@
     <div class="contact-grid reveal">
       <div class="contact-card">
         <span class="contact-type">General Enquiries</span>
-        <a href="mailto:officialaliensonearth@gmail.com">officialaliensonearth@gmail.com</a>
+        <a href="/cdn-cgi/l/email-protection#6a050c0c0309030b060b06030f041905040f0b181e022a0d070b030644090507"><span class="__cf_email__" data-cfemail="0f606969666c666e636e63666a617c60616a6e7d7b674f68626e6663216c6062">[email&#160;protected]</span></a>
         <p class="contact-desc">For research collaborations, media, and general correspondence.</p>
       </div>
       <div class="contact-card">
         <span class="contact-type">Bioloop Project</span>
-        <a href="mailto:bioloopofficial@gmail.com">bioloopofficial@gmail.com</a>
+        <a href="/cdn-cgi/l/email-protection#0c6e65636063637c636a6a656f656d604c6b616d6560226f6361"><span class="__cf_email__" data-cfemail="02606b6d6e6d6d726d64646b616b636e42656f636b6e2c616d6f">[email&#160;protected]</span></a>
         <p class="contact-desc">Direct contact for Bioloop — CO₂ capture to biofuel system inquiries.</p>
       </div>
       <div class="contact-card">
@@ -1436,7 +1419,7 @@
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
-        <h2><a href="assets/AOE.jpeg"></a></h2>
+        <img src="assets/AOE.jpeg" alt="AoE — Aliens on Earth" style="height:48px; border-radius:8px; filter:brightness(1.1); margin-bottom:1rem; display:block;">
         <p>Aliens on Earth. An independent research collective working at the edge of what's known. Science-driven. Engineering-focused.</p>
       </div>
       <div class="footer-col">
@@ -1470,7 +1453,7 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // CUSTOM CURSOR
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
@@ -1590,21 +1573,4 @@
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        e.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
-  revealEls.forEach(el => observer.observe(el));
-
-  // NAV SCROLL EFFECT
-  window.addEventListener('scroll', () => {
-    const nav = document.querySelector('nav');
-    if (window.scrollY > 50) {
-      nav.style.borderBottomColor = 'rgba(120,120,200,0.18)';
-    } else {
-      nav.style.borderBottomColor = 'rgba(120,120,200,0.12)';
-    }
-  });
-</script>
-</body>
-</html>
+        e.target.classList.add('visible')
