@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publications — AoE · Aliens on Earth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #010105; --deep: #05050f; --ink: #0a0a1a;
+    --acid: #00ff88; --plasma: #7b2fff; --signal: #ff2d6b;
+    --ice: #00cfff; --white: #f0f0f8; --muted: #4a4a6a;
+    --border: rgba(120,120,200,0.12);
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--void); color: var(--white); font-family: 'Syne', sans-serif; overflow-x: hidden; cursor: none; }
+
+  .cursor { position: fixed; width: 12px; height: 12px; background: var(--acid); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: transform 0.1s, background 0.2s; mix-blend-mode: difference; }
+  .cursor-ring { position: fixed; width: 40px; height: 40px; border: 1px solid rgba(0,255,136,0.4); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: transform 0.15s ease, width 0.3s, height 0.3s, border-color 0.3s; }
+  #cosmos { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E"); opacity: 0.025; z-index: 1; pointer-events: none; }
+  .grid-bg { position: fixed; inset: 0; background-image: linear-gradient(rgba(120,120,200,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(120,120,200,0.03) 1px, transparent 1px); background-size: 60px 60px; z-index: 0; pointer-events: none; }
+  .glow-1 { position: fixed; top: -200px; left: -200px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(123,47,255,0.08), transparent 70%); pointer-events: none; z-index: 0; }
+  .glow-2 { position: fixed; bottom: -200px; right: -200px; width: 700px; height: 700px; background: radial-gradient(circle, rgba(0,255,136,0.05), transparent 70%); pointer-events: none; z-index: 0; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 4rem; border-bottom: 1px solid var(--border); backdrop-filter: blur(20px); background: rgba(1,1,5,0.7); }
+  .nav-logo { display: flex; align-items: center; gap: 1rem; }
+  .nav-logo img { height: 42px; border-radius: 8px; filter: brightness(1.1); }
+  .nav-wordmark { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.15em; color: var(--white); }
+  .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; transition: color 0.2s; position: relative; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--acid); transition: width 0.3s; }
+  .nav-links a:hover { color: var(--acid); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-links a.active { color: var(--white); }
+  .nav-links a.active::after { width: 100%; background: var(--white); }
+  .nav-cta { background: transparent; border: 1px solid var(--acid); color: var(--acid) !important; padding: 0.5rem 1.4rem; border-radius: 2px; }
+  .nav-cta:hover { background: var(--acid); color: var(--void) !important; }
+  .nav-cta::after { display: none !important; }
+
+  /* PAGE HERO */
+  .page-hero { position: relative; z-index: 2; padding: 14rem 4rem 6rem; max-width: 1400px; margin: 0 auto; }
+  .page-eyebrow { font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.35em; color: var(--acid); text-transform: uppercase; display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; opacity: 0; animation: fadeUp 1s 0.2s forwards; }
+  .page-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--acid); }
+  .page-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(5rem, 11vw, 11rem); line-height: 0.88; letter-spacing: 0.04em; opacity: 0; animation: fadeUp 1s 0.4s forwards; }
+  .page-title .outline { color: transparent; -webkit-text-stroke: 1px rgba(240,240,248,0.2); }
+  .page-sub { margin-top: 2.5rem; font-size: 1rem; color: rgba(240,240,248,0.45); line-height: 1.8; max-width: 560px; opacity: 0; animation: fadeUp 1s 0.6s forwards; }
+
+  /* FILTER */
+  .filter-bar { position: relative; z-index: 2; padding: 0 4rem; max-width: 1400px; margin: 0 auto 5rem; display: flex; gap: 0.5rem; flex-wrap: wrap; opacity: 0; animation: fadeUp 1s 0.8s forwards; }
+  .filter-btn { background: transparent; border: 1px solid var(--border); color: var(--muted); font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.5rem 1.2rem; cursor: none; transition: all 0.2s; }
+  .filter-btn:hover, .filter-btn.active { border-color: var(--acid); color: var(--acid); background: rgba(0,255,136,0.04); }
+
+  .divider { position: relative; z-index: 2; width: 100%; height: 1px; background: linear-gradient(to right, transparent, var(--border), transparent); }
+
+  /* STATS */
+  .pub-stats { position: relative; z-index: 2; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 4rem; }
+  .pub-stats-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+  .pub-stat { padding: 0 2rem; border-right: 1px solid var(--border); }
+  .pub-stat:last-child { border-right: none; }
+  .pub-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; line-height: 1; background: linear-gradient(135deg, var(--white), var(--muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .pub-stat-label { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--muted); text-transform: uppercase; margin-top: 0.4rem; }
+
+  .section-label { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--acid); margin-bottom: 3rem; display: flex; align-items: center; gap: 1rem; }
+  .section-label::before { content: ''; width: 20px; height: 1px; background: var(--acid); }
+
+  /* FEATURED */
+  .featured-section { position: relative; z-index: 2; padding: 6rem 4rem; max-width: 1400px; margin: 0 auto; }
+  .featured-pub { display: grid; grid-template-columns: 1fr 1.2fr; gap: 0; border: 1px solid var(--border); position: relative; overflow: hidden; transition: border-color 0.3s; }
+  .featured-pub:hover { border-color: rgba(0,255,136,0.2); }
+  .featured-pub::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, var(--acid), var(--plasma), var(--ice)); }
+
+  .pub-preview { background: var(--deep); padding: 4rem; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid var(--border); position: relative; overflow: hidden; min-height: 520px; }
+  .pub-preview::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 20% 80%, rgba(0,255,136,0.05), transparent 60%); pointer-events: none; }
+
+  .pub-type-badge { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.4rem 0.9rem; border: 1px solid rgba(0,255,136,0.3); color: var(--acid); width: fit-content; margin-bottom: 2.5rem; }
+  .pub-type-badge .dot { width: 5px; height: 5px; background: var(--acid); border-radius: 50%; animation: blink 2s infinite; }
+
+  .pub-preview-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; line-height: 1.05; letter-spacing: 0.04em; color: var(--white); flex: 1; display: flex; align-items: center; }
+  .pub-meta-row { display: flex; gap: 2rem; margin-top: auto; padding-top: 2.5rem; border-top: 1px solid var(--border); }
+  .pub-meta-item { display: flex; flex-direction: column; gap: 0.3rem; }
+  .pub-meta-item .label { font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; }
+  .pub-meta-item .value { font-size: 0.82rem; font-weight: 700; color: var(--white); }
+
+  .pub-body { padding: 4rem; display: flex; flex-direction: column; background: rgba(5,5,15,0.6); }
+  .pub-project-link { display: inline-flex; align-items: center; gap: 0.6rem; font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--plasma); margin-bottom: 1.5rem; text-decoration: none; }
+  .pub-project-link::before { content: ''; width: 8px; height: 1px; background: var(--plasma); }
+  .pub-body h2 { font-size: 1.2rem; font-weight: 800; color: var(--white); line-height: 1.5; margin-bottom: 1.5rem; }
+  .pub-abstract { font-size: 0.88rem; color: rgba(240,240,248,0.45); line-height: 1.9; flex: 1; }
+  .pub-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
+  .pub-tag { padding: 0.25rem 0.7rem; border: 1px solid var(--border); font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
+  .pub-actions { display: flex; gap: 1rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); flex-wrap: wrap; }
+
+  .btn-download { display: inline-flex; align-items: center; gap: 0.7rem; background: var(--acid); color: var(--void); padding: 0.85rem 2rem; font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; font-weight: 700; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); transition: all 0.2s; cursor: none; }
+  .btn-download:hover { background: var(--white); transform: translateY(-2px); }
+  .btn-view { display: inline-flex; align-items: center; gap: 0.7rem; background: transparent; color: var(--white); padding: 0.85rem 2rem; font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; font-weight: 700; border: 1px solid var(--border); clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); transition: all 0.2s; cursor: none; }
+  .btn-view:hover { border-color: var(--ice); color: var(--ice); transform: translateY(-2px); }
+
+  /* BIOLOOP CALLOUT */
+  .bioloop-callout { position: relative; z-index: 2; margin: 0 4rem 6rem; max-width: calc(1400px - 8rem); padding: 3rem 4rem; background: rgba(123,47,255,0.04); border: 1px solid rgba(123,47,255,0.15); display: grid; grid-template-columns: auto 1fr auto; gap: 3rem; align-items: center; }
+  .bioloop-callout::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, var(--plasma), transparent); }
+  .bioloop-icon { width: 56px; height: 56px; border: 1px solid rgba(123,47,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--plasma); flex-shrink: 0; text-align: center; line-height: 1.2; }
+  .bioloop-text h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.08em; color: var(--white); margin-bottom: 0.4rem; }
+  .bioloop-text p { font-size: 0.82rem; color: rgba(240,240,248,0.4); line-height: 1.7; }
+  .bioloop-link { display: inline-flex; align-items: center; gap: 0.6rem; font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--plasma); text-decoration: none; border-bottom: 1px solid rgba(123,47,255,0.3); padding-bottom: 0.3rem; white-space: nowrap; transition: gap 0.2s, border-color 0.2s; }
+  .bioloop-link:hover { gap: 1rem; border-color: var(--plasma); }
+
+  /* PUB LIST */
+  .pubs-section { position: relative; z-index: 2; padding: 0 4rem 8rem; max-width: 1400px; margin: 0 auto; }
+  .pubs-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); }
+  .pub-row { display: grid; grid-template-columns: 100px 1fr auto; gap: 0; border-bottom: 1px solid var(--border); position: relative; transition: background 0.3s; cursor: none; text-decoration: none; color: inherit; }
+  .pub-row:last-child { border-bottom: none; }
+  .pub-row::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--acid), var(--plasma)); transform: scaleY(0); transition: transform 0.3s; transform-origin: top; }
+  .pub-row:hover::before { transform: scaleY(1); }
+  .pub-row:hover { background: rgba(0,255,136,0.02); }
+  .pub-row-num { display: flex; align-items: center; justify-content: center; padding: 2.5rem; border-right: 1px solid var(--border); font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: rgba(240,240,248,0.06); line-height: 1; }
+  .pub-row-content { padding: 2.5rem 3rem; display: flex; flex-direction: column; gap: 0.6rem; border-right: 1px solid var(--border); }
+  .pub-row-type { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .pub-row-type.energy { color: var(--acid); }
+  .pub-row-type.foundations { color: var(--ice); }
+  .pub-row-type.medical { color: var(--signal); }
+  .pub-row-title { font-size: 1rem; font-weight: 700; color: var(--white); transition: color 0.2s; line-height: 1.4; }
+  .pub-row:hover .pub-row-title { color: var(--acid); }
+  .pub-row-authors { font-size: 0.8rem; color: rgba(240,240,248,0.35); }
+  .pub-row-venue { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.05em; margin-top: 0.3rem; }
+  .pub-row-tags { display: flex; gap: 0.4rem; margin-top: 0.5rem; flex-wrap: wrap; }
+  .pub-row-tag { padding: 0.2rem 0.6rem; border: 1px solid var(--border); font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; }
+  .pub-row-action { display: flex; align-items: center; justify-content: center; padding: 2.5rem; min-width: 120px; }
+  .pub-arrow { width: 40px; height: 40px; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+  .pub-row:hover .pub-arrow { border-color: var(--acid); background: rgba(0,255,136,0.08); }
+  .pub-arrow svg { transition: transform 0.3s; }
+  .pub-row:hover .pub-arrow svg { transform: translate(2px, -2px); }
+
+  /* TICKER */
+  .ticker { position: relative; z-index: 2; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1rem 0; overflow: hidden; background: rgba(123,47,255,0.04); }
+  .ticker-inner { display: flex; gap: 0; animation: ticker 25s linear infinite; white-space: nowrap; }
+  .ticker-item { padding: 0 3rem; font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 1.5rem; }
+  .ticker-item span { color: var(--acid); }
+
+  footer { position: relative; z-index: 2; padding: 6rem 4rem 3rem; border-top: 1px solid var(--border); }
+  .footer-inner { max-width: 1400px; margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 5rem; }
+  .footer-brand h2 { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; letter-spacing: 0.06em; margin-bottom: 1rem; }
+  .footer-brand p { font-size: 0.85rem; color: rgba(240,240,248,0.35); line-height: 1.8; max-width: 280px; }
+  .footer-col h4 { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
+  .footer-col a { display: block; color: rgba(240,240,248,0.4); text-decoration: none; font-size: 0.85rem; margin-bottom: 0.8rem; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--white); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; border-top: 1px solid var(--border); font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; }
+  .footer-status { display: flex; align-items: center; gap: 0.5rem; }
+  .status-dot { width: 6px; height: 6px; background: var(--acid); border-radius: 50%; animation: blink 2s infinite; }
+
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  @media (max-width: 1024px) {
+    nav { padding: 1.5rem 2rem; }
+    .page-hero, .featured-section, .pubs-section, .filter-bar { padding-left: 2rem; padding-right: 2rem; }
+    .featured-pub { grid-template-columns: 1fr; }
+    .pub-preview { border-right: none; border-bottom: 1px solid var(--border); min-height: auto; }
+    .pub-stats { padding: 3rem 2rem; }
+    .pub-stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .bioloop-callout { margin: 0 2rem 4rem; grid-template-columns: 1fr; gap: 1.5rem; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .pub-row { grid-template-columns: 60px 1fr auto; }
+    .pub-stats-inner { grid-template-columns: 1fr 1fr; }
+    footer { padding: 4rem 1.5rem 2rem; }
+    .footer-top { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="grid-bg"></div>
+<div class="glow-1"></div>
+<div class="glow-2"></div>
+<canvas id="cosmos"></canvas>
+
+<nav>
+  <div class="nav-logo">
+    <img src="assets/AOE.jpeg" alt="AoE Logo">
+    <span class="nav-wordmark">AoE</span>
+  </div>
+  <div class="nav-links">
+    <a href="research.html">Research</a>
+    <a href="projects.html">Projects</a>
+    <a href="blog.html">Blog</a>
+    <a href="people.html">People</a>
+    <a href="publications.html" class="active">Publications</a>
+    <a href="blog.html" class="nav-cta">Research Log</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-eyebrow">Research Output · AoE Collective</div>
+  <h1 class="page-title">
+    <span style="display:block;">PUBLI</span>
+    <span style="display:block;" class="outline">CATIONS</span>
+  </h1>
+  <p class="page-sub">
+    Peer-reviewed work, conference proceedings, and technical reports from the AoE collective.
+    All research is tethered to our three core domains — Energy, Medical Systems, and Foundations.
+  </p>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterPubs('all', this)">All</button>
+  <button class="filter-btn" onclick="filterPubs('energy', this)">Energy</button>
+  <button class="filter-btn" onclick="filterPubs('medical', this)">Medical</button>
+  <button class="filter-btn" onclick="filterPubs('foundations', this)">Foundations</button>
+  <button class="filter-btn" onclick="filterPubs('bioloop', this)">BIOLOOP</button>
+  <button class="filter-btn" onclick="filterPubs('ai', this)">AI</button>
+</div>
+
+<div class="pub-stats reveal">
+  <div class="pub-stats-inner">
+    <div class="pub-stat"><div class="pub-stat-num">2</div><div class="pub-stat-label">Publications</div></div>
+    <div class="pub-stat"><div class="pub-stat-num">2</div><div class="pub-stat-label">Domains Covered</div></div>
+    <div class="pub-stat"><div class="pub-stat-num">2025</div><div class="pub-stat-label">Latest Year</div></div>
+    <div class="pub-stat"><div class="pub-stat-num">01</div><div class="pub-stat-label">Core Project</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<section class="featured-section">
+  <div class="section-label reveal">Featured Work</div>
+  <div class="featured-pub reveal" data-category="energy bioloop ai">
+    <div class="pub-preview">
+      <div class="pub-type-badge">
+        <span class="dot"></span>
+        Conference Poster · AAC 2025
+      </div>
+      <div class="pub-preview-title">
+        Real-Time Bioaerosol Monitoring in Algae Hydrogen Reactors
+      </div>
+      <div class="pub-meta-row">
+        <div class="pub-meta-item">
+          <span class="label">Venue</span>
+          <span class="value">AAC 2025</span>
+        </div>
+        <div class="pub-meta-item">
+          <span class="label">Year</span>
+          <span class="value">2025</span>
+        </div>
+        <div class="pub-meta-item">
+          <span class="label">Domain</span>
+          <span class="value">Energy · AI</span>
+        </div>
+      </div>
+    </div>
+    <div class="pub-body">
+      <a href="projects.html" class="pub-project-link">Part of BIOLOOP Initiative</a>
+      <h2>Real-Time Monitoring of Bioaerosol Emissions in Algae-Based Hydrogen Reactors Using Low-Cost Sensors and AI</h2>
+      <p class="pub-abstract">
+        A non-invasive "aerosol fingerprinting" framework for algae-based hydrogen reactors that uses low-cost sensor arrays
+        and Edge-AI to analyze reactor headspace emissions in real time. The system correlates bioaerosol shifts
+        with physiological stress states in <em>Chlamydomonas reinhardtii</em> cultures — providing 3–4 hour early
+        warnings ahead of traditional optical detection. A two-stage ML pipeline (unsupervised anomaly detection +
+        supervised stress classification) achieved 94.6% classification accuracy with sub-10-minute inference on edge
+        hardware, directly closing the control loop for stable green hydrogen production.
+      </p>
+      <div class="pub-tags">
+        <span class="pub-tag">Bioaerosol</span>
+        <span class="pub-tag">Edge AI</span>
+        <span class="pub-tag">Algae Reactor</span>
+        <span class="pub-tag">Green H₂</span>
+        <span class="pub-tag">Anomaly Detection</span>
+        <span class="pub-tag">BIOLOOP</span>
+        <span class="pub-tag">VOC Sensing</span>
+      </div>
+      <div class="pub-actions">
+        <a href="https://prakulhiremath.github.io/assets/Prakul_AAC.pdf" target="_blank" class="btn-download">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M7 1v8M3 6l4 4 4-4M1 11h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Download PDF
+        </a>
+        <a href="https://prakulhiremath.github.io/assets/Prakul_AAC.pdf" target="_blank" class="btn-view">
+          View Poster
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+            <path d="M0 4H10M7 1l3 3-3 3" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="bioloop-callout reveal">
+  <div class="bioloop-icon">BIO<br>LOOP</div>
+  <div class="bioloop-text">
+    <h3>All Publications Linked to BIOLOOP</h3>
+    <p>Both works here are outputs of the BIOLOOP initiative — AoE's flagship project building closed-loop biological systems for green hydrogen production. Research spans real-time bioaerosol monitoring, AI-driven anomaly detection, computational intelligence, and electrochemical pathway modeling in algae-based reactors.</p>
+  </div>
+  <a href="projects.html" class="bioloop-link">
+    Explore BIOLOOP
+    <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+      <path d="M0 5H12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.5"/>
+    </svg>
+  </a>
+</div>
+
+<section class="pubs-section">
+  <div class="section-label reveal">All Publications</div>
+  <div class="pubs-list reveal" id="pubsList">
+
+    <a href="https://prakulhiremath.github.io/assets/Prakul_AAC.pdf" target="_blank" class="pub-row" data-category="energy bioloop ai">
+      <div class="pub-row-num">01</div>
+      <div class="pub-row-content">
+        <span class="pub-row-type energy">Energy · BIOLOOP · AI</span>
+        <div class="pub-row-title">Real-Time Monitoring of Bioaerosol Emissions in Algae-Based Hydrogen Reactors Using Low-Cost Sensors and AI</div>
+        <div class="pub-row-authors">Prakul Sunil Hiremath — Dept. of CSE, Visvesvaraya Technological University, Belagavi, India</div>
+        <div class="pub-row-venue">AAC 2025 · December 01–04, 2025 · Mumbai, India · Poster ID: AACI431</div>
+        <div class="pub-row-tags">
+          <span class="pub-row-tag">Bioaerosol</span>
+          <span class="pub-row-tag">Edge AI</span>
+          <span class="pub-row-tag">Green H₂</span>
+          <span class="pub-row-tag">Anomaly Detection</span>
+          <span class="pub-row-tag">BIOLOOP</span>
+          <span class="pub-row-tag">94.6% Accuracy</span>
+        </div>
+      </div>
+      <div class="pub-row-action">
+        <div class="pub-arrow">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 12L12 2M12 2H5M12 2V9" stroke="#4a4a6a" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
+    </a>
+
+    <a href="https://prakulhiremath.github.io/assets/Casebook_on_AI_A5_202447a94e.pdf" target="_blank" class="pub-row" data-category="ai foundations bioloop">
+      <div class="pub-row-num">02</div>
+      <div class="pub-row-content">
+        <span class="pub-row-type foundations">Foundations · AI</span>
+        <div class="pub-row-title">Casebook on Artificial Intelligence</div>
+        <div class="pub-row-authors">AoE Research Collective</div>
+        <div class="pub-row-venue">Technical Casebook · 2024 · AoE Independent Publication</div>
+        <div class="pub-row-tags">
+          <span class="pub-row-tag">AI Systems</span>
+          <span class="pub-row-tag">Case Studies</span>
+          <span class="pub-row-tag">ML</span>
+          <span class="pub-row-tag">Foundations</span>
+          <span class="pub-row-tag">BIOLOOP</span>
+        </div>
+      </div>
+      <div class="pub-row-action">
+        <div class="pub-arrow">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 12L12 2M12 2H5M12 2V9" stroke="#4a4a6a" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
+    </a>
+
+  </div>
+  <div id="emptyState" style="display:none; text-align:center; padding:6rem 2rem; border:1px solid var(--border); border-top:none;">
+    <p style="font-family:'Space Mono',monospace; font-size:0.7rem; letter-spacing:0.2em; color:var(--muted); text-transform:uppercase;">No publications in this category yet — more incoming</p>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">BIOLOOP <span>·</span> Green Hydrogen Pathways</span>
+    <span class="ticker-item">Arrhythmia Modeling <span>·</span> Signal Intelligence</span>
+    <span class="ticker-item">Bayesian Temporal Systems <span>·</span> Mathematical Foundations</span>
+    <span class="ticker-item">EEG <span>·</span> ECG Signal Analysis <span>·</span> Solar-Driven Systems</span>
+    <span class="ticker-item">BIOLOOP <span>·</span> Green Hydrogen Pathways</span>
+    <span class="ticker-item">Arrhythmia Modeling <span>·</span> Signal Intelligence</span>
+    <span class="ticker-item">Bayesian Temporal Systems <span>·</span> Mathematical Foundations</span>
+    <span class="ticker-item">EEG <span>·</span> ECG Signal Analysis <span>·</span> Solar-Driven Systems</span>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h2>AoE</h2>
+        <p>Aliens on Earth. An independent research collective working at the edge of what's known.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Research</h4>
+        <a href="research.html">Overview</a>
+        <a href="projects.html">Projects</a>
+        <a href="publications.html">Publications</a>
+      </div>
+      <div class="footer-col">
+        <h4>Collective</h4>
+        <a href="people.html">People</a>
+        <a href="blog.html">Research Log</a>
+      </div>
+      <div class="footer-col">
+        <h4>Domains</h4>
+        <a href="#">Energy Systems</a>
+        <a href="#">Medical Systems</a>
+        <a href="#">Foundations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 AoE — Aliens on Earth · Independent Research Collective</span>
+      <div class="footer-status">
+        <div class="status-dot"></div>
+        <span>Research Active</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  });
+  function animRing() {
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+  document.querySelectorAll('a, button, .pub-row, .featured-pub').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.transform = 'translate(-50%,-50%) scale(2)'; ring.style.width = '60px'; ring.style.height = '60px'; ring.style.borderColor = 'rgba(0,255,136,0.6)'; });
+    el.addEventListener('mouseleave', () => { cursor.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.width = '40px'; ring.style.height = '40px'; ring.style.borderColor = 'rgba(0,255,136,0.4)'; });
+  });
+
+  function filterPubs(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const rows = document.querySelectorAll('.pub-row');
+    const featuredSection = document.querySelector('.featured-section');
+    const featured = document.querySelector('.featured-pub');
+    let anyVisible = false;
+    rows.forEach(row => {
+      const cats = row.dataset.category || '';
+      const show = cat === 'all' || cats.includes(cat);
+      row.style.display = show ? '' : 'none';
+      if (show) anyVisible = true;
+    });
+    if (featured && featuredSection) {
+      const fc = featured.dataset.category || '';
+      featuredSection.style.display = (cat === 'all' || fc.includes(cat)) ? '' : 'none';
+    }
+    document.getElementById('emptyState').style.display = anyVisible ? 'none' : 'block';
+  }
+
+  const canvas = document.getElementById('cosmos');
+  const ctx = canvas.getContext('2d');
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  const STARS = Array.from({length: 180}, () => ({ x: Math.random(), y: Math.random(), r: Math.random() * 1.2 + 0.2, o: Math.random() * 0.6 + 0.1, phase: Math.random() * Math.PI * 2 }));
+  const PARTICLES = Array.from({length: 28}, () => ({ x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight, vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4, r: Math.random() * 1.5 + 0.5, color: ['#00ff88','#7b2fff','#00cfff','#ff2d6b'][Math.floor(Math.random()*4)], o: Math.random() * 0.4 + 0.1 }));
+  let t = 0;
+  function drawCosmos() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); t += 0.01;
+    STARS.forEach(s => { ctx.beginPath(); ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI*2); ctx.fillStyle = `rgba(200,210,255,${s.o + Math.sin(t * 3 + s.phase) * 0.15})`; ctx.fill(); });
+    PARTICLES.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
+      ctx.globalAlpha = p.o * (0.5 + Math.sin(t + p.x * 0.01) * 0.5);
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fillStyle = p.color; ctx.fill(); ctx.globalAlpha = 1;
+    });
+    PARTICLES.forEach((a, i) => { PARTICLES.slice(i+1).forEach(b => { const dx = a.x - b.x, dy = a.y - b.y, dist = Math.sqrt(dx*dx + dy*dy); if (dist < 150) { ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.strokeStyle = `rgba(120,120,200,${0.06 * (1 - dist/150)})`; ctx.lineWidth = 0.5; ctx.stroke(); } }); });
+    requestAnimationFrame(drawCosmos);
+  }
+  drawCosmos();
+
+  const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  window.addEventListener('scroll', () => { document.querySelector('nav').style.borderBottomColor = window.scrollY > 50 ? 'rgba(120,120,200,0.18)' : 'rgba(120,120,200,0.12)'; });
+</script>
+</body>
+</html>
