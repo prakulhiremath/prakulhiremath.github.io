@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BIOLOOP — Confidential Briefing</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080b09;
+    --bg2: #0e130f;
+    --bg3: #141a14;
+    --border: #1e2b1f;
+    --border2: #2a3d2b;
+    --green: #3dff7a;
+    --green2: #1a8c3e;
+    --green3: #0d4d22;
+    --muted: #4a6650;
+    --text: #d4e8d8;
+    --text2: #8aab8f;
+    --text3: #4a6650;
+    --white: #f0f7f1;
+    --red: #ff4444;
+    --amber: #ffaa00;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 64px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(61,255,122,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(61,255,122,0.03) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cover-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .cover-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    color: var(--green);
+    text-transform: uppercase;
+  }
+
+  .cover-tag {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text3);
+    text-transform: uppercase;
+    border: 1px solid var(--border2);
+    padding: 6px 14px;
+    border-radius: 2px;
+  }
+
+  .cover-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 0 40px;
+  }
+
+  .cover-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cover-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--green);
+  }
+
+  .cover-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(56px, 8vw, 96px);
+    font-weight: 800;
+    line-height: 0.95;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .cover-title span {
+    color: var(--green);
+  }
+
+  .cover-subtitle {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--text2);
+    max-width: 560px;
+    line-height: 1.6;
+    margin-bottom: 48px;
+  }
+
+  .cover-divider {
+    width: 64px;
+    height: 1px;
+    background: var(--border2);
+    margin-bottom: 48px;
+  }
+
+  .cover-meta {
+    display: flex;
+    gap: 48px;
+    font-size: 12px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+  }
+
+  .cover-meta span { color: var(--text2); }
+
+  .cover-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  .cover-warning {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .cover-index {
+    font-size: 11px;
+    color: var(--text3);
+    text-align: right;
+    line-height: 2;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 96px 64px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-number {
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-number::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--green);
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .section-hook {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--text2);
+    margin-bottom: 56px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+    font-style: italic;
+  }
+
+  /* ── PROSE ── */
+  .prose p {
+    color: var(--text);
+    margin-bottom: 20px;
+    font-size: 15.5px;
+    line-height: 1.8;
+  }
+
+  .prose p:last-child { margin-bottom: 0; }
+
+  .prose strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-left: 2px solid var(--green);
+    padding: 20px 28px;
+    background: rgba(61,255,122,0.03);
+    margin: 36px 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .callout p {
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .callout.warning {
+    border-left-color: var(--amber);
+    background: rgba(255,170,0,0.03);
+  }
+
+  .callout.danger {
+    border-left-color: var(--red);
+    background: rgba(255,68,68,0.03);
+  }
+
+  /* ── STAT GRID ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin: 40px 0;
+    border: 1px solid var(--border);
+  }
+
+  .stat-cell {
+    background: var(--bg2);
+    padding: 32px 28px;
+  }
+
+  .stat-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+
+  /* ── COMPARISON TABLE ── */
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 36px 0;
+    font-size: 14px;
+  }
+
+  .comp-table th {
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text3);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border2);
+    font-weight: 400;
+  }
+
+  .comp-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+    vertical-align: top;
+  }
+
+  .comp-table td:first-child {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .comp-table tr:last-child td { border-bottom: none; }
+
+  .comp-table tr.highlight td {
+    background: rgba(61,255,122,0.04);
+    color: var(--text);
+  }
+
+  .comp-table tr.highlight td:first-child {
+    color: var(--green);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  .badge.fail { background: rgba(255,68,68,0.1); color: #ff6666; }
+  .badge.pass { background: rgba(61,255,122,0.1); color: var(--green); }
+  .badge.partial { background: rgba(255,170,0,0.1); color: var(--amber); }
+
+  /* ── FAULT LIST ── */
+  .fault-list {
+    list-style: none;
+    margin: 36px 0;
+  }
+
+  .fault-list li {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .fault-list li:last-child { border-bottom: none; }
+
+  .fault-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text3);
+    min-width: 28px;
+    padding-top: 3px;
+  }
+
+  .fault-content {}
+
+  .fault-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .fault-desc {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.65;
+  }
+
+  .fault-stat {
+    font-size: 12px;
+    color: var(--red);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+
+  /* ── PRESSURE BLOCK ── */
+  .pressure-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    margin: 40px 0;
+  }
+
+  .pressure-cell {
+    background: var(--bg2);
+    padding: 32px;
+  }
+
+  .pressure-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .pressure-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .pressure-value.up { color: var(--red); }
+  .pressure-value.down { color: var(--amber); }
+
+  .pressure-desc {
+    font-size: 13px;
+    color: var(--text3);
+    line-height: 1.6;
+  }
+
+  /* ── CLOSING STATEMENT ── */
+  .close-statement {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-weight: 600;
+    color: var(--text2);
+    line-height: 1.5;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+    font-style: italic;
+  }
+
+  /* ── FINAL PAGE ── */
+  .final-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 96px 64px;
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .final-section::before {
+    content: '';
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px; height: 800px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(61,255,122,0.025) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .bioloop-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(64px, 10vw, 112px);
+    font-weight: 800;
+    color: var(--green);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+
+  .bioloop-tagline {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--text2);
+    margin-bottom: 56px;
+    font-style: italic;
+  }
+
+  .bioloop-body {
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.9;
+    max-width: 620px;
+    margin-bottom: 56px;
+  }
+
+  .bioloop-body p { margin-bottom: 20px; }
+
+  .access-block {
+    border: 1px solid var(--border2);
+    padding: 32px 36px;
+    background: var(--bg2);
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .access-block::before {
+    content: 'RESTRICTED';
+    position: absolute;
+    top: -1px; right: 24px;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--bg);
+    background: var(--green);
+    padding: 4px 10px;
+    font-weight: 600;
+  }
+
+  .access-block p {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+
+  .access-block p:last-child { margin-bottom: 0; }
+
+  .access-block strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .contact-line {
+    font-size: 13px;
+    color: var(--text3);
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .contact-line span {
+    color: var(--green);
+    font-weight: 500;
+  }
+
+  .final-footer {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .final-footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--green);
+    letter-spacing: 0.05em;
+  }
+
+  .final-footer-note {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-align: right;
+  }
+
+  /* ── SECTION CLOSER ── */
+  .section-close {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text3);
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-close::before {
+    content: '→';
+    color: var(--green);
+    font-style: normal;
+  }
+
+  /* ── YIELD COMPARE ── */
+  .yield-bar-wrap {
+    margin: 36px 0;
+  }
+
+  .yield-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .yield-label {
+    font-size: 13px;
+    color: var(--text2);
+    min-width: 160px;
+  }
+
+  .yield-bar-bg {
+    flex: 1;
+    height: 8px;
+    background: var(--bg3);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .yield-bar {
+    height: 100%;
+    border-radius: 1px;
+    background: var(--muted);
+  }
+
+  .yield-bar.hero { background: var(--green); }
+
+  .yield-val {
+    font-size: 13px;
+    color: var(--text3);
+    min-width: 140px;
+    text-align: right;
+  }
+
+  .yield-val.hero { color: var(--green); font-weight: 500; }
+
+  /* ── EROI BLOCK ── */
+  .eroi-block {
+    background: rgba(255,68,68,0.05);
+    border: 1px solid rgba(255,68,68,0.15);
+    padding: 36px;
+    margin: 36px 0;
+    text-align: center;
+  }
+
+  .eroi-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 72px;
+    font-weight: 800;
+    color: var(--red);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .eroi-label {
+    font-size: 13px;
+    color: var(--text3);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .eroi-explain {
+    font-size: 14px;
+    color: var(--text2);
+    max-width: 440px;
+    margin: 0 auto;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 700px) {
+    .cover, .section, .final-section { padding: 40px 24px; }
+    .stat-grid { grid-template-columns: 1fr; }
+    .pressure-grid { grid-template-columns: 1fr; }
+    .cover-title { font-size: 48px; }
+    .yield-label { min-width: 100px; font-size: 12px; }
+    .yield-val { min-width: 100px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ COVER -->
+<div class="cover">
+  <div class="cover-top">
+    <div class="cover-logo">Bioloop</div>
+    <div class="cover-tag">Confidential · 2025</div>
+  </div>
+
+  <div class="cover-center">
+    <div class="cover-eyebrow">Energy Infrastructure</div>
+    <div class="cover-title">BIO<span>LOOP</span></div>
+    <div class="cover-subtitle">
+      A briefing on the structural failure of global diesel supply — and the engineering gap no one has closed.
+    </div>
+    <div class="cover-divider"></div>
+    <div class="cover-meta">
+      <div>Status <span>Pre-Disclosure</span></div>
+      <div>Stage <span>Venture Brief</span></div>
+      <div>Year <span>2025</span></div>
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-warning">For discussion purposes only · Not for distribution</div>
+    <div class="cover-index">
+      01 · The Fuel Problem<br/>
+      02 · Why Alternatives Fail<br/>
+      03 · The Only Viable Path<br/>
+      04 · Feedstock Selection<br/>
+      05 · Why It Hasn't Worked<br/>
+      06 · The Pressure Builds<br/>
+      07 · Bioloop
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════ SECTION 1 -->
+<div class="section">
+  <div class="section-number">01</div>
+  <div class="section-title">The Fuel<br/>Problem</div>
+  <div class="section-hook">Diesel is not just a fuel. It is the structural backbone of modern economies — and it is broken at the root.</div>
+
+  <div class="prose">
+    <p>Modern economies run on diesel. Not as one option among many — but as the singular, non-negotiable fuel for freight transport, agriculture, and industrial movement. The global logistics system, food supply chain, and manufacturing backbone all depend on it functioning without interruption.</p>
+    <p>Diesel is produced through <strong>fractional distillation of crude oil</strong> — a fixed industrial process with a fixed output ceiling. It constitutes roughly 25–30% of each barrel refined. You cannot produce more diesel without processing more crude. There is no workaround. There is no independent production pathway.</p>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-cell">
+      <div class="stat-value">~80%</div>
+      <div class="stat-label">Global energy still supplied by fossil fuels</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-value">88–89%</div>
+      <div class="stat-label">India's crude oil that is imported</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-value">$140B+</div>
+      <div class="stat-label">India's annual crude oil import bill</div>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>This creates a chain of structural vulnerabilities. Global oil supply depends on Middle East production, maritime chokepoints — the Strait of Hormuz, the Suez Canal — and political stability across regions that have demonstrated repeated instability. The Russia–Ukraine conflict realigned supply chains overnight. Iran–Israel tensions triggered tanker risk and price spikes of 20–25%. A single container vessel blocking the Suez Canal cascaded delays across global trade.</p>
+    <p>India imports approximately 55% of its crude from the Middle East. Japan imports 95%. South Korea, 70%. Strategic reserves in India cover roughly 20–25 days of consumption. There is no meaningful buffer.</p>
+  </div>
+
+  <div class="callout warning">
+    <p>Karnataka holds no crude oil reserves. Belagavi — with its dense agricultural, industrial, and logistics activity — operates entirely at the mercy of a supply chain it has zero influence over. Every fuel price movement is a direct shock to farming costs, transport economics, and local livelihoods.</p>
+  </div>
+
+  <div class="prose">
+    <p>This is not a future risk. It is the current operating condition. And domestic production in India is on a declining trajectory while demand accelerates.</p>
+  </div>
+
+  <div class="section-close">The system is structurally fragile. And demand is only growing.</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════ SECTION 2 -->
+<div class="section">
+  <div class="section-number">02</div>
+  <div class="section-title">Why Existing<br/>Alternatives Fail</div>
+  <div class="section-hook">Every proposed solution to diesel dependence breaks against the same wall: the real world.</div>
+
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>Alternative</th>
+        <th>Heavy Transport</th>
+        <th>Existing Infrastructure</th>
+        <th>Local Production</th>
+        <th>Deployment Readiness</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Electric Vehicles</td>
+        <td><span class="badge fail">Not viable</span></td>
+        <td><span class="badge fail">Requires overhaul</span></td>
+        <td><span class="badge fail">Grid dependent</span></td>
+        <td><span class="badge fail">Decades away</span></td>
+      </tr>
+      <tr>
+        <td>Hydrogen</td>
+        <td><span class="badge partial">Theoretical</span></td>
+        <td><span class="badge fail">None exists</span></td>
+        <td><span class="badge fail">Cost prohibitive</span></td>
+        <td><span class="badge fail">Not deployable</span></td>
+      </tr>
+      <tr>
+        <td>CNG / LNG</td>
+        <td><span class="badge partial">Limited</span></td>
+        <td><span class="badge fail">New systems needed</span></td>
+        <td><span class="badge fail">Still fossil fuel</span></td>
+        <td><span class="badge partial">Partial</span></td>
+      </tr>
+      <tr>
+        <td>Ethanol</td>
+        <td><span class="badge fail">Wrong engine type</span></td>
+        <td><span class="badge fail">Petrol only</span></td>
+        <td><span class="badge fail">Food crop conflict</span></td>
+        <td><span class="badge fail">Not a substitute</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="prose">
+    <p>Electric vehicles are advancing rapidly in passenger transport. They are not a solution for long-haul trucking, agricultural machinery, or industrial equipment. Battery energy density remains insufficient. Charging infrastructure in India's freight corridors does not exist at scale. And India's electricity grid still relies heavily on coal — replacing diesel with EVs without solving the grid problem simply relocates the dependency.</p>
+    <p>Hydrogen carries theoretical promise but practical impossibility at current scale. Storage requires either extreme pressure or cryogenic temperatures. Neither is compatible with existing transport infrastructure. Production costs remain far above diesel economics. India has no hydrogen distribution network.</p>
+    <p>CNG and LNG reduce emissions incrementally but do not address the structural problem — they are still fossil fuels, still externally sourced, still requiring new engine architectures and distribution systems that India's fleet cannot absorb quickly.</p>
+    <p>Ethanol operates in a completely different engine category. It blends with petrol, not diesel. It competes with food crops for feedstock. It is not a diesel substitute in any operational sense.</p>
+  </div>
+
+  <div class="callout danger">
+    <p>Vehicle fleet turnover in India takes decades. Infrastructure shifts take longer. Any solution that requires either is not a solution for the current crisis — it is a distant aspiration that leaves the present system exposed.</p>
+  </div>
+
+  <div class="section-close">No current alternative is deployment-ready for diesel replacement in core sectors.</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════ SECTION 3 -->
+<div class="section">
+  <div class="section-number">03</div>
+  <div class="section-title">The Only<br/>Viable Path</div>
+  <div class="section-hook">One fuel class satisfies every constraint. Not perfectly — but decisively.</div>
+
+  <div class="prose">
+    <p>Biodiesel is a direct diesel substitute produced from biological lipids — oils and fats — through a chemical process called <strong>transesterification</strong>. Triglycerides react with methanol in the presence of a catalyst to produce Fatty Acid Methyl Esters (FAME) — biodiesel — and glycerol as a byproduct.</p>
+    <p>The critical property is compatibility. Biodiesel operates in compression ignition engines — the same engines that run on diesel — at blends from B20 (20% biodiesel) to B100 (pure biodiesel) without engine modification. It flows through existing fuel distribution infrastructure. It can be produced without crude oil. It can be produced locally.</p>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-cell">
+      <div class="stat-value">~37–40</div>
+      <div class="stat-label">MJ/kg energy density (vs diesel's ~45 MJ/kg)</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-value">Better</div>
+      <div class="stat-label">Lubricity vs conventional diesel</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-value">Lower</div>
+      <div class="stat-label">CO and particulate matter emissions</div>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>The energy density gap — approximately 10–15% lower than petroleum diesel — is real. It is also manageable. Biodiesel's superior lubricity reduces engine wear. Its cleaner combustion profile compensates for the density difference in real-world performance. The trade-off is acceptable. The compatibility advantage is decisive.</p>
+    <p>No other alternative can be dropped into an existing diesel engine, in an existing vehicle fleet, using existing fuelling infrastructure, produced without crude oil. Biodiesel can.</p>
+  </div>
+
+  <div class="callout">
+    <p>The infrastructure lock-in that makes alternatives impossible is precisely what makes biodiesel viable. It doesn't fight the existing system. It feeds into it.</p>
+  </div>
+
+  <div class="section-close">Biodiesel works. The feedstock is the problem.</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════ SECTION 4 -->
+<div class="section">
+  <div class="section-number">04</div>
+  <div class="section-title">Feedstock<br/>Selection</div>
+  <div class="section-hook">Every feedstock option has been evaluated. One survives every test.</div>
+
+  <div class="prose">
+    <p>A viable biodiesel feedstock must satisfy five conditions simultaneously: high oil yield per unit area, no competition with food supply, scalable production, stable cost, and local availability. Failing any one condition eliminates a feedstock from serious consideration.</p>
+  </div>
+
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>Feedstock</th>
+        <th>Oil Yield</th>
+        <th>Food Conflict</th>
+        <th>Scalable</th>
+        <th>Verdict</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Edible oils (soy, palm)</td>
+        <td>500–1,000 L/ha/yr</td>
+        <td><span class="badge fail">Severe</span></td>
+        <td><span class="badge fail">Deforestation risk</span></td>
+        <td><span class="badge fail">Eliminated</span></td>
+      </tr>
+      <tr>
+        <td>Jatropha / Pongamia</td>
+        <td>~600 L/ha/yr</td>
+        <td><span class="badge pass">None</span></td>
+        <td><span class="badge fail">Failed at scale</span></td>
+        <td><span class="badge fail">Eliminated</span></td>
+      </tr>
+      <tr>
+        <td>Waste Cooking Oil</td>
+        <td>Supply-limited</td>
+        <td><span class="badge pass">None</span></td>
+        <td><span class="badge fail">Not backbone</span></td>
+        <td><span class="badge partial">Supplementary</span></td>
+      </tr>
+      <tr>
+        <td>Animal Fats</td>
+        <td>High lipid %</td>
+        <td><span class="badge partial">Ethical concerns</span></td>
+        <td><span class="badge fail">Supply constrained</span></td>
+        <td><span class="badge fail">Eliminated</span></td>
+      </tr>
+      <tr class="highlight">
+        <td>Microalgae</td>
+        <td>20,000–50,000 L/ha/yr</td>
+        <td><span class="badge pass">None</span></td>
+        <td><span class="badge pass">Non-arable land</span></td>
+        <td><span class="badge pass">Selected</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="prose">
+    <p>Jatropha deserves specific mention. India ran a national-scale Jatropha programme and it failed. Yield was inconsistent. The growth cycle was too long. Land requirements were impractical. It is not a theoretical elimination — it is an evidence-based one.</p>
+    <p>Microalgae produces up to <strong>50,000 litres of oil per hectare per year</strong>. The nearest crop-based competitor produces roughly 1,000. That is not an incremental difference. It is a categorical one.</p>
+  </div>
+
+  <div class="yield-bar-wrap">
+    <div class="yield-row">
+      <div class="yield-label">Soybean</div>
+      <div class="yield-bar-bg"><div class="yield-bar" style="width:1.5%"></div></div>
+      <div class="yield-val">~450 L/ha/yr</div>
+    </div>
+    <div class="yield-row">
+      <div class="yield-label">Sunflower</div>
+      <div class="yield-bar-bg"><div class="yield-bar" style="width:2%"></div></div>
+      <div class="yield-val">~800 L/ha/yr</div>
+    </div>
+    <div class="yield-row">
+      <div class="yield-label">Palm Oil</div>
+      <div class="yield-bar-bg"><div class="yield-bar" style="width:4%"></div></div>
+      <div class="yield-val">~5,000 L/ha/yr</div>
+    </div>
+    <div class="yield-row">
+      <div class="yield-label">Microalgae</div>
+      <div class="yield-bar-bg"><div class="yield-bar hero" style="width:100%"></div></div>
+      <div class="yield-val hero">Up to 50,000 L/ha/yr</div>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>Microalgae grows in non-arable land, in controlled reactor environments, with doubling times measured in hours. It requires no agricultural land. It does not displace food crops. It can use CO₂ as a direct input. Its lipid content — at 20–50% of dry biomass under optimized conditions — is unmatched by any plant-based source.</p>
+  </div>
+
+  <div class="callout">
+    <p>Microalgae is not selected because it is convenient. It is selected because every other option fails at scale, and microalgae is the only feedstock whose theoretical yield can match diesel demand density — without competing for land, water, or food.</p>
+  </div>
+
+  <div class="section-close">Microalgae is the only scalable answer. But no one has made it work. That is the real problem.</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════ SECTION 5 -->
+<div class="section">
+  <div class="section-number">05</div>
+  <div class="section-title">Why It<br/>Hasn't Worked</div>
+  <div class="section-hook">The failure of microalgae biodiesel is not biological. It is engineering. And it is systemic.</div>
+
+  <div class="prose">
+    <p>Microalgae biodiesel has been studied for decades. The potential has been known since the 1970s. Multiple countries, institutions, and companies have attempted scale-up. None have achieved commercial viability. The reason is consistent across every attempt: the system is not optimized as a unified whole.</p>
+  </div>
+
+  <ul class="fault-list">
+    <li>
+      <div class="fault-num">01</div>
+      <div class="fault-content">
+        <div class="fault-title">Light Attenuation & Self-Shading</div>
+        <div class="fault-desc">As biomass density increases, light penetrates less. Surface layers remain active; interior cells become photosynthetically inert. The more successfully you grow algae, the less efficiently it grows.</div>
+        <div class="fault-stat">Photosynthetic efficiency in real systems: 1–3% vs theoretical 8–10%</div>
+      </div>
+    </li>
+    <li>
+      <div class="fault-num">02</div>
+      <div class="fault-content">
+        <div class="fault-title">Growth–Lipid Trade-off</div>
+        <div class="fault-desc">High-growth conditions produce low lipid content. High lipid accumulation requires stress conditions that suppress growth. Every system optimises for one at the cost of the other. No current approach resolves this tension.</div>
+      </div>
+    </li>
+    <li>
+      <div class="fault-num">03</div>
+      <div class="fault-content">
+        <div class="fault-title">Harvesting Energy Barrier</div>
+        <div class="fault-desc">Microalgae cells are 2–20 micrometres in size with near-water density. Separating them from cultivation medium at scale demands either centrifugation, membrane filtration, or chemical flocculation — all energy-intensive, all expensive.</div>
+        <div class="fault-stat">Harvesting alone: 20–30% of total production cost</div>
+      </div>
+    </li>
+    <li>
+      <div class="fault-num">04</div>
+      <div class="fault-content">
+        <div class="fault-title">Intracellular Lipid Extraction</div>
+        <div class="fault-desc">Lipids are stored inside the cell. Cell disruption — mechanical, chemical, or thermal — is required before extraction. Each method adds energy input, solvent costs, and processing complexity. Each step reduces net energy yield.</div>
+      </div>
+    </li>
+    <li>
+      <div class="fault-num">05</div>
+      <div class="fault-content">
+        <div class="fault-title">No Integrated System Design</div>
+        <div class="fault-desc">Each stage of the process — cultivation, harvesting, extraction, conversion — is typically designed and optimised in isolation. Efficiencies gained in one stage are frequently lost at the interface with the next. The system has no unified optimisation framework.</div>
+      </div>
+    </li>
+  </ul>
+
+  <div class="eroi-block">
+    <div class="eroi-value">≤ 1</div>
+    <div class="eroi-label">Energy Return on Investment (EROI) — observed in current systems</div>
+    <div class="eroi-explain">Many microalgae biodiesel systems consume as much energy to operate as the fuel they produce. When EROI falls to or below 1, the system is energetically unsustainable regardless of all other metrics.</div>
+  </div>
+
+  <div class="prose">
+    <p>This is not a marginal inefficiency problem. It is a fundamental systems architecture problem. The biological potential exists. The chemistry is established. The engineering integration required to make it viable has not been achieved.</p>
+  </div>
+
+  <div class="section-close">The failure is engineering, not biology. The gap is system integration, not scientific understanding.</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════ SECTION 6 -->
+<div class="section">
+  <div class="section-number">06</div>
+  <div class="section-title">The Pressure<br/>Builds</div>
+  <div class="section-hook">Four forces are moving simultaneously. None of them are reversing.</div>
+
+  <div class="pressure-grid">
+    <div class="pressure-cell">
+      <div class="pressure-label">Diesel Demand</div>
+      <div class="pressure-value up">Increasing ↑</div>
+      <div class="pressure-desc">Driven by freight expansion, agricultural mechanisation, and industrial growth across emerging economies. India's logistics sector is accelerating, not slowing.</div>
+    </div>
+    <div class="pressure-cell">
+      <div class="pressure-label">Crude Supply</div>
+      <div class="pressure-value down">Externally Constrained</div>
+      <div class="pressure-desc">88–89% imported. Routed through geopolitically unstable corridors. Domestic production on a declining curve. No independent scaling pathway exists.</div>
+    </div>
+    <div class="pressure-cell">
+      <div class="pressure-label">Alternative Readiness</div>
+      <div class="pressure-value down">Not Deployment-Ready</div>
+      <div class="pressure-desc">No alternative fuel matches diesel's compatibility, energy density, and infrastructure fit for heavy transport. The gap remains open.</div>
+    </div>
+    <div class="pressure-cell">
+      <div class="pressure-label">Infrastructure Lock-in</div>
+      <div class="pressure-value down">Decades to Change</div>
+      <div class="pressure-desc">Fleet turnover, distribution infrastructure, and engine architecture are locked into diesel for the foreseeable future. Abrupt transition is not operationally possible.</div>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>These four forces do not operate independently. They compound. Rising demand against a constrained and unstable supply, with no ready alternative and no quick escape from infrastructure dependence, produces a system under increasing stress.</p>
+    <p>At the national level: rising import bills, price volatility, strategic exposure. At the local level in Belagavi: higher agricultural input costs, increased logistics expense, vulnerability to any disruption in the supply chain between the Middle East and a local fuel depot.</p>
+    <p>There is no natural equilibrium here. The trajectory does not bend toward stability on its own.</p>
+  </div>
+
+  <div class="callout danger">
+    <p>The current trajectory does not lead to stability. It leads to increasing dependence on a fuel system that is externally controlled, supply-constrained, and operationally critical — with no buffer and no exit visible on the near-term horizon.</p>
+  </div>
+
+  <div class="section-close">In this context, the challenge is not identifying alternatives — it is enabling a fuel pathway that operates within existing systems while reducing dependence on external crude supply.</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════ SECTION 7 — BIOLOOP -->
+<div class="final-section">
+  <div class="section-number">07</div>
+  <div class="bioloop-name">BIOLOOP</div>
+  <div class="bioloop-tagline">Closing the loop on diesel dependence.</div>
+
+  <div class="bioloop-body">
+    <p>Bioloop is being built to address the exact engineering gap identified in this document — not as another algae research project, but as a <strong>system-level solution</strong> to microalgae biodiesel's fundamental integration failure.</p>
+    <p>The problem is not biological. The solution is not simply growing algae. The opportunity is in designing a unified production system where cultivation efficiency, biomass yield, harvesting energy cost, and lipid extraction are optimised together — not in isolation.</p>
+    <p>Bioloop targets local, modular, and scalable biodiesel production — deployable without crude oil dependency, compatible with existing diesel infrastructure, and engineered to achieve a positive energy balance where current systems cannot.</p>
+    <p>The system is in active development. Technical architecture, production economics, and deployment roadmap are available for discussion under engagement.</p>
+  </div>
+
+  <div class="access-block">
+    <p><strong>This document is a pre-disclosure briefing.</strong> It establishes context, identifies the problem, and positions the opportunity. No proprietary technical details, process specifications, or system architecture are included here.</p>
+    <p>Further information — including Bioloop's technical approach, production design, and engagement terms — is available exclusively to parties who express formal interest.</p>
+    <p>To initiate a discussion: <strong>reach out directly.</strong> We will respond to serious enquiries.</p>
+  </div>
+
+  <div class="contact-line">Contact — <span>[Your Name]</span></div>
+  <div class="contact-line">Email — <span>[your@email.com]</span></div>
+  <div class="contact-line">Location — <span>Belagavi, Karnataka, India</span></div>
+
+  <div class="final-footer">
+    <div class="final-footer-logo">BIOLOOP</div>
+    <div class="final-footer-note">
+      Confidential · Pre-Disclosure · 2025<br/>
+      Not for distribution without prior consent
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
