@@ -533,7 +533,7 @@
 
   .team-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr); /* Fixed: Changed from 4 to 3 columns to perfectly fit 3 members */
     gap: 40px;
     margin-top: 64px;
   }
@@ -553,6 +553,7 @@
     justify-content: center;
     margin-bottom: 20px;
     font-size: 48px;
+    overflow: hidden; /* Added to keep image corners masked inside the border-radius */
   }
 
   .team-member-name {
@@ -670,6 +671,10 @@
     .footer-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
+  @media (max-width: 768px) {
+    .team-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+  }
+
   @media (max-width: 640px) {
     nav { flex-direction: column; gap: 20px; }
     .nav-links { gap: 20px; flex-direction: column; }
@@ -677,7 +682,6 @@
     .hero { padding: 100px 20px 40px; }
     .hero-cta { flex-direction: column; }
     .roadmap-item { grid-template-columns: 1fr; gap: 20px; padding-left: 30px; }
-    .team-grid { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr; }
     .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
   }
@@ -685,7 +689,6 @@
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════ HEADER ═══════════════════════════════════════ -->
 <header>
   <nav>
     <div class="nav-logo">BIOLOOP</div>
@@ -700,7 +703,6 @@
   </nav>
 </header>
 
-<!-- ═══════════════════════════════════════ HERO ═══════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-content">
     <div class="hero-eyebrow">Industrial Carbon Utilization</div>
@@ -708,12 +710,11 @@
     <p class="hero-subtitle">Industrial-scale microalgal biorefinery. Transform mandatory carbon compliance into a profitable operation.</p>
     <div class="hero-cta">
       <button class="btn-primary" onclick="scrollToContact()">Start a Pilot</button>
-      <button class="btn-secondary" onclick="document.getElementById('research').scrollIntoView()">Research Brief</button>
+      <button class="btn-secondary" onclick="document.getElementById('technology').scrollIntoView({ behavior: 'smooth' })">Research Brief</button>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════ PROBLEM ═══════════════════════════════════════ -->
 <section class="problem" id="problem">
   <div class="section-eyebrow">The Challenge</div>
   <h2 class="section-title">India's Carbon Compliance Crisis</h2>
@@ -738,7 +739,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════ SOLUTION ═══════════════════════════════════════ -->
 <section class="solution" id="solution">
   <div class="section-eyebrow">The Answer</div>
   <h2 class="section-title">BIOLOOP: Co-Located Carbon Utilization</h2>
@@ -782,7 +782,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════ TECHNOLOGY ═══════════════════════════════════════ -->
 <section class="tech" id="technology">
   <div class="section-eyebrow">Technical Foundation</div>
   <h2 class="section-title">Proven Science. Integrated Engineering.</h2>
@@ -808,7 +807,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════ MARKET ═══════════════════════════════════════ -->
 <section class="market" id="market">
   <div class="section-eyebrow">Market Opportunity</div>
   <h2 class="section-title">India's Growing Demand for Industrial Biomass</h2>
@@ -830,7 +828,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════ ROADMAP ═══════════════════════════════════════ -->
 <section class="roadmap" id="roadmap">
   <div class="section-eyebrow">Execution Plan</div>
   <h2 class="section-title">From Pilot to Scale</h2>
@@ -893,30 +890,28 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════ TEAM ═══════════════════════════════════════ -->
-<section class="team">
+<section class="team" id="team">
   <div class="section-eyebrow">Leadership</div>
   <h2 class="section-title">Built by Scientists & Engineers</h2>
   
-<div class="team-grid">
+  <div class="team-grid">
     <div class="team-member">
       <div class="team-member-avatar">
-        <img src="assets/IMG_1997.jpg" alt="Prakul Hiremath" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; filter: grayscale(30%) brightness(0.85);">
+        <img src="assets/IMG_1997.jpg" alt="Prakul Hiremath" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(30%) brightness(0.85);">
       </div>
       <div class="team-member-name">Prakul Hiremath</div>
       <div class="team-member-role">CEO & Founder</div>
     </div>
     <div class="team-member">
       <div class="team-member-avatar">
-        <img src="assets/IMG_4360.jpg" alt="Harshit Hiremath" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; filter: grayscale(30%) brightness(0.85);">
+        <img src="assets/IMG_4360.jpg" alt="Harshit Hiremath" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(30%) brightness(0.85);">
       </div>
       <div class="team-member-name">Harshit Hiremath</div>
       <div class="team-member-role">COO & Co-Founder</div>
     </div>
     <div class="team-member">
       <div class="team-member-avatar">
-        <!-- Replace 'shivanand.jpg' with the actual filename of his photo inside the assets folder -->
-        <img src="assets/shivanand.jpg" alt="Dr. Shivanand Hiremath" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; filter: grayscale(30%) brightness(0.85);" onerror="this.style.display='none'; this.parentNode.innerText='👨‍🔬'">
+        <img src="assets/shivanand.jpg" alt="Dr. Shivanand Hiremath" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(30%) brightness(0.85);" onerror="this.style.display='none'; this.parentNode.innerText='👨‍🔬'">
       </div>
       <div class="team-member-name">Dr. Shivanand Hiremath</div>
       <div class="team-member-role">Mentor</div>
@@ -924,7 +919,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════ CTA ═══════════════════════════════════════ -->
 <section class="cta" id="contact">
   <div class="cta-title">Ready to Transform Compliance Into Profit?</div>
   <p class="cta-subtitle">We're actively seeking industrial partners for pilot deployment. If your facility faces CCTS compliance pressure and sees an opportunity to generate revenue from CO₂, let's talk.</p>
@@ -933,7 +927,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════ FOOTER ═══════════════════════════════════════ -->
 <footer>
   <div class="footer-content">
     <div class="footer-grid">
@@ -1001,20 +994,16 @@
     });
   });
 
-  // Header hide on scroll
-  let lastScrollTop = 0;
-  const header = document.querySelector('header');
-  
+  // Header border adjustments on scroll
   window.addEventListener('scroll', function() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const header = document.querySelector('header');
     
     if (scrollTop > 100) {
       header.style.borderBottomColor = 'rgba(61, 255, 122, 0.2)';
     } else {
       header.style.borderBottomColor = 'rgba(61, 255, 122, 0.1)';
     }
-    
-    lastScrollTop = scrollTop;
   });
 </script>
 
