@@ -584,6 +584,166 @@
     .team-grid { grid-template-columns: 1fr; gap: 2rem; max-width: 400px; margin: 3rem auto 0; }
   }
 
+  /* ─── GALLERY / SLIDING SHOWCASE ─── */
+  .gallery {
+    background: var(--bg2);
+  }
+
+  .gallery-slider {
+    position: relative;
+    margin-top: 64px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg3);
+  }
+
+  .gallery-track-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  .gallery-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gallery-slide {
+    position: relative;
+    flex: 0 0 100%;
+    height: 100%;
+  }
+
+  .gallery-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(10%) brightness(0.92);
+  }
+
+  .gallery-slide-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 32px 40px 24px;
+    background: linear-gradient(to top, rgba(8,11,9,0.92) 0%, rgba(8,11,9,0.55) 55%, transparent 100%);
+  }
+
+  .gallery-slide-caption-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .gallery-slide-caption-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.03em;
+  }
+
+  .gallery-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(61, 255, 122, 0.25);
+    background: rgba(8, 11, 9, 0.55);
+    backdrop-filter: blur(6px);
+    color: var(--white);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    transition: all 0.3s ease;
+  }
+
+  .gallery-nav-btn:hover {
+    border-color: var(--green);
+    color: var(--green);
+    background: rgba(8, 11, 9, 0.8);
+  }
+
+  .gallery-nav-prev { left: 20px; }
+  .gallery-nav-next { right: 20px; }
+
+  .gallery-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 24px 20px;
+    flex-wrap: wrap;
+  }
+
+  .gallery-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+  }
+
+  .gallery-dot.active {
+    background: var(--green);
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  .gallery-thumbs {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .gallery-thumb {
+    aspect-ratio: 1 / 1;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+    background: var(--bg3);
+  }
+
+  .gallery-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .gallery-thumb.active,
+  .gallery-thumb:hover {
+    opacity: 1;
+    border-color: var(--green);
+  }
+
+  @media (max-width: 1024px) {
+    .gallery-thumbs { grid-template-columns: repeat(6, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .gallery-track-wrap { aspect-ratio: 4 / 5; }
+    .gallery-slide-caption { padding: 20px 20px 18px; }
+    .gallery-nav-btn { width: 36px; height: 36px; font-size: 15px; }
+    .gallery-thumbs { grid-template-columns: repeat(4, 1fr); }
+  }
+
   /* ─── CTA SECTION ─── */
   .cta {
     background: var(--bg2);
@@ -711,6 +871,7 @@
       <li><a href="#technology">Technology</a></li>
       <li><a href="#market">Market</a></li>
       <li><a href="#roadmap">Roadmap</a></li>
+      <li><a href="#gallery">Gallery</a></li>
     </ul>
     <button class="nav-cta" onclick="scrollToContact()">Contact</button>
   </nav>
@@ -940,6 +1101,156 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════ GALLERY / SLIDING SHOWCASE ═══════════════════════════════════════ -->
+<section class="gallery" id="gallery">
+  <div class="section-eyebrow">Recent Work</div>
+  <h2 class="section-title">Moments From the Field</h2>
+  <p class="section-subtitle">Pilot demos, government engagement, research showcases, and press coverage from the BIOLOOP journey.</p>
+
+  <div class="gallery-slider">
+    <div class="gallery-track-wrap">
+      <div class="gallery-track" id="galleryTrack">
+
+        <div class="gallery-slide">
+          <img src="assets/gallery-01.jpg" alt="BIOLOOP team at K-tech / Startup Karnataka event"/>
+          <div class="gallery-slide-caption">
+            <div class="gallery-slide-caption-title">Startup Karnataka & K-tech Showcase</div>
+            <div class="gallery-slide-caption-desc">BIOLOOP team with mentors and delegates at the state innovation event</div>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="assets/gallery-02.jpg" alt="Handing over proposal to government official"/>
+          <div class="gallery-slide-caption">
+            <div class="gallery-slide-caption-title">Government Engagement</div>
+            <div class="gallery-slide-caption-desc">Presenting the BIOLOOP proposal to a senior government dignitary</div>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="assets/gallery-03.jpg" alt="NAIN 2.0 Graduation and Demo Day"/>
+          <div class="gallery-slide-caption">
+            <div class="gallery-slide-caption-title">NAIN 2.0 — Graduation & Demo Day</div>
+            <div class="gallery-slide-caption-desc">From Ideas to Impact — showcasing BIOLOOP at the incubation demo day</div>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="assets/gallery-04.jpg" alt="Marathi press coverage of BIOLOOP"/>
+          <div class="gallery-slide-caption">
+            <div class="gallery-slide-caption-title">Regional Press Coverage</div>
+            <div class="gallery-slide-caption-desc">Local media spotlighting the youth-led algae biofuel innovation</div>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="assets/gallery-05.jpg" alt="Research poster presentation at AAC 2025"/>
+          <div class="gallery-slide-caption">
+            <div class="gallery-slide-caption-title">14th AAC 2025, Mumbai</div>
+            <div class="gallery-slide-caption-desc">Presenting research on real-time bioaerosol monitoring in algae-based reactors</div>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="assets/gallery-06.jpg" alt="Kannada newspaper feature on BIOLOOP"/>
+          <div class="gallery-slide-caption">
+            <div class="gallery-slide-caption-title">Sanje Madhyama Feature</div>
+            <div class="gallery-slide-caption-desc">Belagavi engineering students' BIOLOOP technology reaches national attention</div>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="assets/gallery-07.jpg" alt="Lab prototype testing with mentors"/>
+          <div class="gallery-slide-caption">
+            <div class="gallery-slide-caption-title">Mechanics & Materials Lab</div>
+            <div class="gallery-slide-caption-desc">Prototype testing session with faculty mentors and the core team</div>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="assets/gallery-08.jpg" alt="BIOLOOP booth at India AI Impact Summit"/>
+          <div class="gallery-slide-caption">
+            <div class="gallery-slide-caption-title">India AI Impact Summit 2026</div>
+            <div class="gallery-slide-caption-desc">Live demo booth — Transforming CO₂ to Energy</div>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="assets/gallery-09.jpg" alt="Marathi newspaper clipping on international recognition"/>
+          <div class="gallery-slide-caption">
+            <div class="gallery-slide-caption-title">International Recognition</div>
+            <div class="gallery-slide-caption-desc">SGBIT students' project featured on a global stage</div>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="assets/gallery-10.jpg" alt="New Indian Express feature on BIOLOOP"/>
+          <div class="gallery-slide-caption">
+            <div class="gallery-slide-caption-title">The New Indian Express</div>
+            <div class="gallery-slide-caption-desc">"City students' project featured at AI Summit" — full team feature story</div>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="assets/gallery-11.jpg" alt="Founders presenting documents to official"/>
+          <div class="gallery-slide-caption">
+            <div class="gallery-slide-caption-title">Institutional Support</div>
+            <div class="gallery-slide-caption-desc">Founders formalizing partnership documentation</div>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="assets/gallery-12.jpg" alt="Team at India AI Impact Summit venue"/>
+          <div class="gallery-slide-caption">
+            <div class="gallery-slide-caption-title">Bharat Mandapam, New Delhi</div>
+            <div class="gallery-slide-caption-desc">Team and mentors at the India AI Impact Summit venue</div>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="assets/gallery-13.jpg" alt="Founder outside a heritage building"/>
+          <div class="gallery-slide-caption">
+            <div class="gallery-slide-caption-title">On the Road</div>
+            <div class="gallery-slide-caption-desc">Outreach and partnership visits across the country</div>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="assets/gallery-14.jpg" alt="Award ceremony on stage at NAIN 2.0"/>
+          <div class="gallery-slide-caption">
+            <div class="gallery-slide-caption-title">NAIN 2.0 Recognition</div>
+            <div class="gallery-slide-caption-desc">BIOLOOP team receiving their graduation certificate on stage</div>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="assets/gallery-15.jpg" alt="Founders with a spiritual leader"/>
+          <div class="gallery-slide-caption">
+            <div class="gallery-slide-caption-title">Community Blessings</div>
+            <div class="gallery-slide-caption-desc">Sharing the BIOLOOP vision and seeking community support</div>
+          </div>
+        </div>
+
+        <div class="gallery-slide">
+          <img src="assets/gallery-16.jpg" alt="Vijaya Karnataka newspaper feature"/>
+          <div class="gallery-slide-caption">
+            <div class="gallery-slide-caption-title">Vijaya Karnataka Coverage</div>
+            <div class="gallery-slide-caption-desc">"CO₂ as biofuel" — BIOLOOP technology reaches national milestone</div>
+          </div>
+        </div>
+
+      </div>
+
+      <button class="gallery-nav-btn gallery-nav-prev" id="galleryPrev" aria-label="Previous slide">‹</button>
+      <button class="gallery-nav-btn gallery-nav-next" id="galleryNext" aria-label="Next slide">›</button>
+    </div>
+
+    <div class="gallery-dots" id="galleryDots"></div>
+  </div>
+
+  <div class="gallery-thumbs" id="galleryThumbs"></div>
+</section>
+
 <!-- ═══════════════════════════════════════ CTA ═══════════════════════════════════════ -->
 <section class="cta" id="contact">
   <div class="cta-title">Ready to Transform Compliance Into Profit?</div>
@@ -1032,6 +1343,84 @@
     
     lastScrollTop = scrollTop;
   });
+
+  // ═══════════════════════════════════════ GALLERY SLIDER ═══════════════════════════════════════
+  (function () {
+    const track = document.getElementById('galleryTrack');
+    if (!track) return;
+
+    const slides = Array.from(track.children);
+    const dotsWrap = document.getElementById('galleryDots');
+    const thumbsWrap = document.getElementById('galleryThumbs');
+    const prevBtn = document.getElementById('galleryPrev');
+    const nextBtn = document.getElementById('galleryNext');
+
+    let current = 0;
+    let autoplayTimer = null;
+    const AUTOPLAY_MS = 4500;
+
+    // Build dots
+    slides.forEach((slide, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+
+      // Build thumbnails using the same image source as each slide
+      const img = slide.querySelector('img');
+      const thumbBtn = document.createElement('button');
+      thumbBtn.className = 'gallery-thumb' + (i === 0 ? ' active' : '');
+      thumbBtn.setAttribute('aria-label', 'Preview slide ' + (i + 1));
+      const thumbImg = document.createElement('img');
+      thumbImg.src = img.getAttribute('src');
+      thumbImg.alt = img.getAttribute('alt') || '';
+      thumbBtn.appendChild(thumbImg);
+      thumbBtn.addEventListener('click', () => goTo(i));
+      thumbsWrap.appendChild(thumbBtn);
+    });
+
+    const dots = Array.from(dotsWrap.children);
+    const thumbs = Array.from(thumbsWrap.children);
+
+    function update() {
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      dots.forEach((d, i) => d.classList.toggle('active', i === current));
+      thumbs.forEach((t, i) => t.classList.toggle('active', i === current));
+    }
+
+    function goTo(index) {
+      current = (index + slides.length) % slides.length;
+      update();
+      restartAutoplay();
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    function restartAutoplay() {
+      if (autoplayTimer) clearInterval(autoplayTimer);
+      autoplayTimer = setInterval(next, AUTOPLAY_MS);
+    }
+
+    prevBtn.addEventListener('click', prev);
+    nextBtn.addEventListener('click', next);
+
+    const sliderWrap = document.querySelector('.gallery-slider');
+    sliderWrap.addEventListener('mouseenter', () => { if (autoplayTimer) clearInterval(autoplayTimer); });
+    sliderWrap.addEventListener('mouseleave', restartAutoplay);
+
+    // Basic swipe support
+    let touchStartX = 0;
+    sliderWrap.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    sliderWrap.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); }
+    }, { passive: true });
+
+    update();
+    restartAutoplay();
+  })();
 </script>
 
 </body>
