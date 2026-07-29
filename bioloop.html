@@ -744,6 +744,132 @@
     .gallery-thumbs { grid-template-columns: repeat(4, 1fr); }
   }
 
+ /* ─────────────────────────────────────────
+   LATEST UPDATES
+───────────────────────────────────────── */
+
+.updates{
+    background:var(--bg);
+}
+
+.updates-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:32px;
+    margin-top:60px;
+}
+
+.update-card{
+
+    background:var(--bg3);
+
+    border:1px solid var(--border);
+
+    border-radius:8px;
+
+    padding:40px;
+
+    transition:.35s ease;
+
+    display:flex;
+
+    flex-direction:column;
+
+    min-height:250px;
+}
+
+.update-card:hover{
+
+    transform:translateY(-6px);
+
+    border-color:var(--green);
+
+    background:rgba(61,255,122,.03);
+}
+
+.update-card.featured{
+
+    grid-column:span 2;
+
+    min-height:320px;
+}
+
+.update-date{
+
+    color:var(--green);
+
+    font-size:12px;
+
+    letter-spacing:.18em;
+
+    text-transform:uppercase;
+
+    margin-bottom:18px;
+
+    font-weight:700;
+}
+
+.update-card h3{
+
+    font-family:'Syne',sans-serif;
+
+    color:var(--white);
+
+    font-size:34px;
+
+    line-height:1.2;
+
+    margin-bottom:18px;
+}
+
+.update-card:not(.featured) h3{
+
+    font-size:24px;
+}
+
+.update-card p{
+
+    color:var(--text-muted);
+
+    font-size:15px;
+
+    line-height:1.8;
+
+    flex:1;
+}
+
+.update-link{
+
+    color:var(--green);
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    margin-top:24px;
+
+    transition:.3s;
+}
+
+.update-link:hover{
+
+    letter-spacing:.04em;
+}
+
+@media(max-width:900px){
+
+    .updates-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .update-card.featured{
+
+        grid-column:span 1;
+    }
+
+}
+
   /* ─── CTA SECTION ─── */
   .cta {
     background: var(--bg2);
@@ -832,7 +958,8 @@
     font-size: 13px;
     color: var(--text-light);
   }
-
+  
+ 
   /* ─── RESPONSIVE ─── */
   @media (max-width: 1024px) {
     nav { padding: 20px 40px; }
@@ -872,6 +999,7 @@
       <li><a href="#market">Market</a></li>
       <li><a href="#roadmap">Roadmap</a></li>
       <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#updates">Updates</a></li>
     </ul>
     <button class="nav-cta" onclick="scrollToContact()">Contact</button>
   </nav>
@@ -1228,6 +1356,91 @@
   <div class="gallery-thumbs" id="galleryThumbs"></div>
 </section>
 
+<!-- ═══════════════════════════════════════ UPDATES ═══════════════════════════════════════ -->
+<section class="updates" id="updates">
+  <div class="section-eyebrow">Latest Updates</div>
+  <h2 class="section-title">Building the Future, One Milestone at a Time.</h2>
+  <p class="section-subtitle">
+    Follow BIOLOOP's latest milestones, competitions, publications,
+    partnerships, research, and product development.
+  </p>
+
+  <div class="updates-grid">
+
+    <!-- Featured Update -->
+    <article class="update-card featured">
+      <div class="update-date">JULY 2026</div>
+      <h3>BIOLOOP Selected for Manthan 2026</h3>
+      <p>
+        BIOLOOP was selected among India's promising climate technology
+        startups to participate in Manthan 2026, showcasing our industrial
+        carbon utilization platform.
+      </p>
+
+      <a href="#" class="update-link">
+        Read More →
+      </a>
+    </article>
+
+    <!-- Update -->
+    <article class="update-card">
+      <div class="update-date">JULY 2026</div>
+      <h3>CCTS-745 Dataset Released</h3>
+      <p>
+        Published the first standardized facility-level dataset for India's
+        Carbon Credit Trading Scheme with an open DOI on Zenodo.
+      </p>
+
+      <a href="https://doi.org/10.5281/zenodo.21671592" target="_blank" class="update-link">
+        View Dataset →
+      </a>
+    </article>
+
+    <!-- Update -->
+    <article class="update-card">
+      <div class="update-date">JUNE 2026</div>
+      <h3>India AI Impact Summit</h3>
+      <p>
+        BIOLOOP was selected for the Government of India's AI in Energy
+        Casebook and presented at the India AI Impact Summit.
+      </p>
+
+      <a href="#" class="update-link">
+        Learn More →
+      </a>
+    </article>
+
+    <!-- Update -->
+    <article class="update-card">
+      <div class="update-date">MAY 2026</div>
+      <h3>NAIN Graduation Day</h3>
+      <p>
+        Successfully completed Karnataka's NAIN incubation program after
+        validating BIOLOOP's early technology and commercialization roadmap.
+      </p>
+
+      <a href="#" class="update-link">
+        View Photos →
+      </a>
+    </article>
+
+    <!-- Update -->
+    <article class="update-card">
+      <div class="update-date">APRIL 2026</div>
+      <h3>Prototype Development</h3>
+      <p>
+        Continued engineering and laboratory development of BIOLOOP's modular
+        algae-based carbon utilization platform.
+      </p>
+
+      <a href="#" class="update-link">
+        Read Update →
+      </a>
+    </article>
+
+  </div>
+</section>
+ 
 <!-- ═══════════════════════════════════════ CTA ═══════════════════════════════════════ -->
 <section class="cta" id="contact">
   <div class="cta-title">Ready to Transform Compliance Into Profit?</div>
