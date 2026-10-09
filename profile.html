@@ -15,7 +15,8 @@
   .toolbar button,.toolbar a{border:1px solid #ddd;border-radius:3px;background:#fff;color:#171717;padding:9px 14px;font:inherit;text-decoration:none;cursor:pointer}
   .toolbar a{background:transparent;color:#fff}
   .sheet{width:min(900px,100%);margin:24px auto;background:#fff;padding:58px 68px 64px;box-shadow:0 2px 16px #0001}
-  header{border-bottom:2px solid #222;padding-bottom:18px;margin-bottom:22px}
+  .profile-header{display:grid;grid-template-columns:minmax(0,1fr) 112px;gap:24px;align-items:start;border-bottom:2px solid #222;padding-bottom:18px;margin-bottom:22px}
+  .profile-photo{width:112px;height:140px;object-fit:cover;object-position:center 28%;display:block;filter:grayscale(100%)}
   h1{font-size:29pt;line-height:1.1;font-weight:normal;letter-spacing:-.5px;margin:0 0 7px}
   .role{font-size:12pt;margin:0 0 9px}
   .meta{font-size:9.5pt;line-height:1.55;color:#333}
@@ -41,7 +42,7 @@
   .links{font-size:9.5pt;line-height:1.6}
   .print-only{display:none}
   @page{size:A4;margin:16mm 17mm 17mm}
-  @media(max-width:650px){.sheet{padding:30px 22px;margin:0;box-shadow:none}.entry-head{display:block}.status{text-align:left;margin:2px 0 3px}.two-col{grid-template-columns:1fr}.toolbar{position:static}}
+  @media(max-width:650px){.sheet{padding:30px 22px;margin:0;box-shadow:none}.entry-head{display:block}.status{text-align:left;margin:2px 0 3px}.two-col{grid-template-columns:1fr}.toolbar{position:static}.profile-header{grid-template-columns:minmax(0,1fr) 92px;gap:14px}.profile-photo{width:92px;height:116px}}
   @media print{
     html,body{background:#fff!important;color:#000;font-size:9.5pt;line-height:1.36}
     .toolbar{display:none!important}
@@ -51,7 +52,7 @@
     h3{break-after:avoid-page}
     .entry{break-inside:avoid-page;margin-bottom:8px}
     .print-only{display:block}
-    header{margin-bottom:15px}
+    .profile-header{margin-bottom:15px;grid-template-columns:minmax(0,1fr) 27mm;gap:8mm;break-inside:avoid-page}.profile-photo{width:27mm;height:34mm;filter:grayscale(100%)}
     .screen-url{display:none}
     thead{display:table-header-group}
   }
@@ -63,8 +64,8 @@
   <a href="./">Back to website</a>
 </div>
 <main class="sheet">
-<header>
-  <h1>Prakul Hiremath</h1>
+<header class="profile-header">
+  <div class="identity"><h1>Prakul Hiremath</h1>
   <p class="role">Researcher &amp; Engineer · Computer Science</p>
   <div class="meta">
     Belagavi, Karnataka, India <span class="sep">|</span> B.Tech, Computer Science and Engineering, VTU (2023–2027)<br>
@@ -75,7 +76,8 @@
     <a href="https://www.linkedin.com/in/prakulhiremath/">LinkedIn</a> <span class="sep">|</span>
     <a href="https://openreview.net/profile?id=%7EPRAKUL_SUNIL_HIREMATH2">OpenReview</a> <span class="sep">|</span>
     <a href="https://medium.com/@prakulhiremath">Medium</a>
-  </div>
+  </div></div>
+  <img class="profile-photo" src="assets/prakul-portrait.jpg" alt="Portrait of Prakul Hiremath">
 </header>
 
 <section>
