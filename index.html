@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>Prakul Hiremath — Research & Engineering</title>
+<meta name="description" content="Prakul Hiremath: CS undergraduate at VTU with two NeurIPS 2026 papers on selection bias in RLHF and sequential detection. Seeking Summer 2027 research internships.">
+<link rel="canonical" href="https://prakulhiremath.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Prakul Hiremath">
+<meta property="og:title" content="Prakul Hiremath — Research & Engineering">
+<meta property="og:description" content="Two NeurIPS 2026 papers: Latency-Conditioned Selection Bias in RLHF, and When Does Sequential Detection Collapse to a Scalar?">
+<meta property="og:url" content="https://prakulhiremath.github.io/">
+<meta property="og:image" content="https://prakulhiremath.github.io/assets/prakul-portrait.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Prakul Hiremath — Research & Engineering">
+<meta name="twitter:description" content="Two NeurIPS 2026 papers on selection bias in RLHF and sequential detection.">
+<meta name="twitter:image" content="https://prakulhiremath.github.io/assets/prakul-portrait.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="topline"></div>
+<main class="wrap">
+
+<section class="hero" id="home">
+<div>
+<div class="eyebrow">Computer Science, VTU Belagavi</div>
+<h1>Prakul Hiremath</h1>
+<p class="subtitle">Researcher &amp; Engineer</p>
+<p class="bio">I’m a B.Tech Computer Science student at VTU, Belagavi (graduating August 2027), working on statistical inference, sequential decision-making, and RL and LLM post-training. My research asks when reducing or losing information changes what a system decides, and how to detect and correct it. I’m looking for Summer 2027 research internships and, longer term, an MS program. I’m open to research collaborations at any time.</p>
+<!-- NeurIPS banner: remove after Dec 12, 2026 -->
+<aside class="note" aria-label="NeurIPS 2026 posters">
+<strong>NeurIPS 2026, Sydney.</strong> Two accepted posters in Hall 1–4. Come say hello.
+<ul>
+<li><a href="https://neurips.cc/virtual/2026/loc/sydney/poster/148493" target="_blank" rel="noopener">Latency-Conditioned Selection Bias in RLHF</a>: Tue Dec 8, 5–8 PM AEDT, #S3009</li>
+<li><a href="https://neurips.cc/virtual/2026/loc/sydney/poster/149453" target="_blank" rel="noopener">When Does Sequential Detection Collapse to a Scalar?</a>: Thu Dec 10, 10 AM–1 PM AEDT, #S1009</li>
+</ul>
+</aside>
+</div>
+<aside>
+<img class="portrait" src="assets/prakul-portrait.jpg" alt="Prakul Hiremath outside Vidhana Soudha in Belagavi" width="420" height="525">
+<div class="caption">Belagavi, Karnataka, India</div>
+<div class="links"><a href="CV.pdf">CV</a><a href="profile.html">Print profile</a><a href="https://github.com/prakulhiremath" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/prakulhiremath/" target="_blank" rel="noopener">LinkedIn</a></div>
+<div class="mini"><a href="mailto:prakulhiremath@vtu.ac.in">prakulhiremath@vtu.ac.in</a></div>
+</aside>
+</section>
+
+<section class="section" id="work">
+<h2>Selected work</h2>
+<p class="intro">Research on selection bias, sequential detection, evaluation, and uncertainty.</p>
+<h3 class="sub">NeurIPS 2026</h3>
+<article class="row"><div class="kind">Poster · Sole author</div><div>
+<h3>Latency-Conditioned Selection Bias in RLHF</h3>
+<p>Discarding the slowest rollouts in asynchronous RLHF filters out long reasoning trajectories and biases training. Includes a diagnostic (EGI) and an inverse-probability correction (SPW).</p>
+<p><strong>Result:</strong> GSM8K accuracy with LLaMA-3-8B falls from 68.4% to 44.1% under the bias; the correction recovers 66.9%.</p>
+<p><a href="https://neurips.cc/virtual/2026/loc/sydney/poster/148493" target="_blank" rel="noopener">NeurIPS poster</a> · <a href="https://prakulhiremath.github.io/LCSB/">Project page</a> · <a href="https://openreview.net/forum?id=xOXpq3oPYW" target="_blank" rel="noopener">OpenReview</a></p>
+</div></article>
+<article class="row"><div class="kind">Poster · With P. M. Bagawan, S. Bhekane</div><div>
+<h3>When Does Sequential Detection Collapse to a Scalar? A Necessary and Sufficient Characterisation</h3>
+<p>Gives an exact condition (EDS) for when a Bayesian sequential detection problem can be reduced to a scalar statistic without losing Bayes-optimal decisions, and the unavoidable loss when it cannot.</p>
+<p><strong>Result:</strong> predicted and observed lead times agree within 0.4 steps (MAE) across 72 synthetic configurations.</p>
+<p><a href="https://neurips.cc/virtual/2026/loc/sydney/poster/149453" target="_blank" rel="noopener">NeurIPS poster</a> · <a href="https://prakulhiremath.github.io/pard/">Project page</a> · <a href="https://openreview.net/forum?id=pyACmQx0Yt" target="_blank" rel="noopener">OpenReview</a></p>
+</div></article>
+<h3 class="sub">Under review and preprints</h3>
+<article class="row"><div class="kind">ICLR 2027 · Submitted</div><div><h3>Evaluation Collapse: When Metrics Cannot Distinguish Model Behavior</h3><p>Examines when scalar evaluation metrics fail to distinguish systems with meaningfully different behavior.</p><p><a href="https://openreview.net/forum?id=o2qnUZZlAv" target="_blank" rel="noopener">OpenReview</a> · <a href="https://openreview.net/pdf?id=o2qnUZZlAv" target="_blank" rel="noopener">PDF</a></p></div></article>
+<article class="row"><div class="kind">AISTATS 2027 · Submitted</div><div><h3>Information Is Not Enough: A Tight, Post-Hoc Diagnostic for Representation Robustness Under Distribution Shift</h3><p>A post-hoc diagnostic for whether frozen representations preserve task-relevant information under anticipated distribution shifts.</p><p><a href="https://openreview.net/forum?id=ZCoWzjB6jP" target="_blank" rel="noopener">OpenReview</a> · <a href="https://openreview.net/attachment?id=ZCoWzjB6jP&amp;name=pdf" target="_blank" rel="noopener">PDF</a></p></div></article>
+<article class="row"><div class="kind">arXiv · Preprint</div><div><h3>Calibration Drift Under Reasoning: How Chain-of-Thought Budgets Induce Overconfidence in Large Language Models</h3><p>Investigates how reasoning budgets relate to calibration and overconfidence in language models.</p><p><a href="https://arxiv.org/abs/2606.11211" target="_blank" rel="noopener">arXiv</a></p></div></article>
+<article class="row"><div class="kind">NeurIPS 2026 · E&amp;D submission</div><div><h3>When Confidence Metrics Fail: Sensitivity–Uncertainty Alignment as a Diagnostic for High-Risk Model Errors</h3><p>Studies whether uncertainty estimates align with model sensitivity to input changes in high-risk prediction settings.</p><p><a href="https://arxiv.org/abs/2604.20903" target="_blank" rel="noopener">arXiv</a> · <a href="https://anonymous.4open.science/r/SUA-67E1/readme.md" target="_blank" rel="noopener">Code</a></p></div></article>
+</section>
+
+<section class="section" id="education">
+<h2>Education</h2>
+<article class="row"><div class="kind">Aug 2023 – Aug 2027 (expected)</div><div>
+<h3>B.Tech in Computer Science and Engineering</h3>
+<p>Visvesvaraya Technological University (VTU), Belagavi, Karnataka · CGPA 8.02/10</p>
+<p>Relevant subjects: Linear Algebra, Multivariable Calculus, Probability and Statistics, Design and Analysis of Algorithms, Artificial Intelligence and Machine Learning, Operating Systems.</p>
+</div></article>
+<article class="row"><div class="kind">Jun 2021 – Jul 2023</div><div><h3>Pre-University, Science (PCM)</h3><p>Prerna Pre-University College (KSEAB), Belagavi · 91%</p></div></article>
+<article class="row"><div class="kind">Mar 2011 – Apr 2021</div><div><h3>Secondary School (CBSE)</h3><p>Billimoria High School, Panchgani, Maharashtra · 95.6%</p></div></article>
+</section>
+
+<section class="section" id="experience">
+<h2>Experience</h2>
+<article class="row"><div class="kind">Sep 2026 – Jan 2027</div><div>
+<h3>Research Intern, ITISMU, VTU Belagavi</h3>
+<p>Working with Dr. M. N. Birje on how model capabilities emerge during training, and how the timing of detection depends on evaluation resolution. The work separates a capability first becoming detectable from becoming reliably usable across training checkpoints.</p>
+</div></article>
+<article class="row"><div class="kind">Aug 2024 – present</div><div>
+<h3>Founder, Aliens on Earth (AoE)</h3>
+<p>Independent research collective working on clean-energy and deep-tech projects, including BIOLOOP and S2N. <a href="aoe.html">Projects, grants, and patents</a></p>
+</div></article>
+<article class="row"><div class="kind">30 Jan – 1 Feb 2026</div><div>
+<h3>Astroinformatics Researcher, Astronomy and Calculus Club, VTU</h3>
+<p>Presented “AI-Driven, Uncertainty-Aware Anomaly Detection in Multi-wavelength AstroSat Observations” at <a href="https://www.ursc.gov.in/AstroSatConference/" target="_blank" rel="noopener">A Decade of AstroSat Observations</a>, organised by U. R. Rao Satellite Centre, ISRO, Bengaluru.</p>
+</div></article>
+</section>
+
+<section class="section" id="projects">
+<h2>Selected projects</h2>
+<p class="intro">Open-source research software for time series, detection, and evaluation. More on <a href="https://github.com/prakulhiremath" target="_blank" rel="noopener">GitHub</a> and <a href="https://pypi.org/user/prakul/" target="_blank" rel="noopener">PyPI</a> (including memoscope, chronosdefrag, SUA, and CDUR).</p>
+<article class="row"><div class="kind">Finance · State-space</div><div><h3>LOB-Latent-Regimes</h3><p>Early detection of unobserved microstructure states in high-frequency limit order books using semi-parametric state-space models.</p><p><a href="https://github.com/prakulhiremath/LOB-Latent-Regimes" target="_blank" rel="noopener">GitHub</a> · <a href="https://arxiv.org/abs/2604.20949" target="_blank" rel="noopener">Paper</a></p></div></article>
+<article class="row"><div class="kind">RL · C++</div><div><h3>Latency Gym</h3><p>Gymnasium environments for training RL agents to optimise low-latency systems infrastructure.</p><p><a href="https://github.com/prakulhiremath/latency-gym" target="_blank" rel="noopener">GitHub</a></p></div></article>
+<article class="row"><div class="kind">Finance · Time series</div><div><h3>TIDAL</h3><p>Temporal framework for early detection of latent financial market instability from microstructure dynamics.</p><p><a href="https://github.com/prakulhiremath/TIDAL" target="_blank" rel="noopener">GitHub</a></p></div></article>
+<article class="row"><div class="kind">Evaluation</div><div><h3>HED Score</h3><p>A time-aware metric that rewards earlier detection over delayed response.</p><p><a href="https://github.com/prakulhiremath/HED-score" target="_blank" rel="noopener">GitHub</a> · <a href="https://pypi.org/project/hed-score/" target="_blank" rel="noopener">PyPI</a> · <a href="https://arxiv.org/abs/2604.04993" target="_blank" rel="noopener">Paper</a></p></div></article>
+<article class="row"><div class="kind">Time series</div><div><h3>Temporal Leaks</h3><p>Detects look-ahead bias and train–test contamination in ML pipelines.</p><p><a href="https://github.com/prakulhiremath/temporal-leaks" target="_blank" rel="noopener">GitHub</a> · <a href="https://pypi.org/project/temporal-leaks/" target="_blank" rel="noopener">PyPI</a></p></div></article>
+<article class="row"><div class="kind">State-space models</div><div><h3>identifiability-diagnostic</h3><p>Pre-training diagnostic for latent-regime unidentifiability in switching state-space models.</p><p><a href="https://github.com/prakulhiremath/identifiability-diagnostic-framework" target="_blank" rel="noopener">GitHub</a> · <a href="https://pypi.org/project/identifiability-diagnostic/" target="_blank" rel="noopener">PyPI</a></p></div></article>
+<article class="row"><div class="kind">Anomaly detection</div><div><h3>ParallelWatch</h3><p>Real-time multivariate correlation and anomaly detection built on state-space sequence models.</p><p><a href="https://github.com/prakulhiremath/parallelwatch" target="_blank" rel="noopener">GitHub</a> · <a href="https://pypi.org/project/parallelwatch/" target="_blank" rel="noopener">PyPI</a></p></div></article>
+<article class="row"><div class="kind">Data engineering</div><div><h3>Flashback</h3><p>Time-travel debugging and lineage tracking for Pandas and Polars.</p><p><a href="https://github.com/prakulhiremath/flashback" target="_blank" rel="noopener">GitHub</a> · <a href="https://pypi.org/project/flashback-df/" target="_blank" rel="noopener">PyPI</a></p></div></article>
+</section>
+
+<section class="section" id="contact">
+<h2>Get in touch</h2>
+<p class="intro">For research internships, MS opportunities, or collaboration, email <a href="mailto:prakulhiremath@vtu.ac.in">prakulhiremath@vtu.ac.in</a>. For AoE projects, see the <a href="aoe.html">AoE page</a>.</p>
+<nav class="profiles" aria-label="Research and professional profiles">
+<a href="https://scholar.google.com/citations?user=ERbZUdoAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
+<a href="https://github.com/prakulhiremath" target="_blank" rel="noopener">GitHub</a>
+<a href="https://www.linkedin.com/in/prakulhiremath/" target="_blank" rel="noopener">LinkedIn</a>
+<a href="https://openreview.net/profile?id=%7EPRAKUL_SUNIL_HIREMATH2" target="_blank" rel="noopener">OpenReview</a>
+<a href="https://aclanthology.org/people/prakul-hiremath/unverified/" target="_blank" rel="noopener">ACL Anthology</a>
+<a href="https://dblp.org/search?q=Prakul%20Hiremath" target="_blank" rel="noopener">DBLP</a>
+<a href="https://orcid.org/0009-0007-9744-3519" target="_blank" rel="noopener">ORCID</a>
+<a href="https://arxiv.org/a/hiremath_p_1.html" target="_blank" rel="noopener">arXiv</a>
+<a href="https://pypi.org/user/prakul/" target="_blank" rel="noopener">PyPI</a>
+<a href="https://x.com/PrakulHiremath" target="_blank" rel="noopener">X</a>
+<a href="https://medium.com/@prakulhiremath" target="_blank" rel="noopener">Medium</a>
+</nav>
+</section>
+</main>
+<footer><div class="wrap foot"><span>© 2026 Prakul Hiremath</span><a href="#home">Back to top</a></div></footer>
+</body>
+</html>
